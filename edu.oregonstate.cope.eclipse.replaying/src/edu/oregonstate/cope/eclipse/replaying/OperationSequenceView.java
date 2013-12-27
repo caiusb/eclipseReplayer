@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 
-import edu.illinois.codingtracker.operations.Event;
 import edu.illinois.codingtracker.operations.UserOperation;
 
 
@@ -102,11 +101,11 @@ public class OperationSequenceView extends ViewPart {
 	}
 
 	private void createViewerColumns() {
-		TableViewerColumn descriptionColumn= createColumn("Event description", 200);
+		TableViewerColumn descriptionColumn= createColumn("Operation description", 200);
 		descriptionColumn.setLabelProvider(new StyledCellLabelProvider() {
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText(((Event)cell.getElement()).getDescription());
+				cell.setText(((UserOperation)cell.getElement()).getDescription());
 				updateCellAppearance(cell);
 			}
 		});
@@ -114,7 +113,7 @@ public class OperationSequenceView extends ViewPart {
 		dateColumn.setLabelProvider(new StyledCellLabelProvider() {
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText(dateFormat.format(((Event)cell.getElement()).getDate()));
+				cell.setText(dateFormat.format(((UserOperation)cell.getElement()).getDate()));
 				updateCellAppearance(cell);
 			}
 		});
@@ -122,7 +121,7 @@ public class OperationSequenceView extends ViewPart {
 		timestampColumn.setLabelProvider(new StyledCellLabelProvider() {
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText(String.valueOf(((Event)cell.getElement()).getTime()));
+				cell.setText(String.valueOf(((UserOperation)cell.getElement()).getTime()));
 				updateCellAppearance(cell);
 			}
 		});
@@ -182,11 +181,11 @@ public class OperationSequenceView extends ViewPart {
 		tableViewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
-				Event userOperation= (Event)((IStructuredSelection)event.getSelection()).getFirstElement();
+				UserOperation userOperation= (UserOperation)((IStructuredSelection)event.getSelection()).getFirstElement();
 				userOperationReplayer.toggleBreakpoint(userOperation);
 				removeSelection();
 				isDoubleClickRefresh= true;
-				//updateTableViewerElement(userOperation);
+				updateTableViewerElement(userOperation);
 				isDoubleClickRefresh= false;
 			}
 		});

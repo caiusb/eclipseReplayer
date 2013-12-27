@@ -6,10 +6,6 @@ package edu.illinois.codingtracker.operations;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import edu.illinois.codingtracker.operations.conflicteditors.ClosedConflictEditorOperation;
 import edu.illinois.codingtracker.operations.conflicteditors.OpenedConflictEditorOperation;
 import edu.illinois.codingtracker.operations.conflicteditors.SavedConflictEditorOperation;
@@ -61,42 +57,15 @@ import edu.illinois.codingtracker.operations.textchanges.UndoneTextChangeOperati
  */
 public class OperationDeserializer {
 
-	private static final String OPERATIONS_SEPARATOR = "\n\\$@\\$";
-
-	/**
-	 * Method has been rewritten to parse JSON event file instead of file with custom formatting
-	 * 
-	 * @param operationsRecord
-	 * @return
-	 */
-	public static List<Event> getUserOperations(String operationsRecord) {
-		List<Event> userOperations= new LinkedList<Event>();
-		String[] operationsList = operationsRecord.split(OPERATIONS_SEPARATOR);
-		JSONParser parser = new JSONParser();
-		JSONObject value = null;
-		Event event = null;
-		String strValue = null;
-			for(String operation : operationsList) {
-				try {
-					if(operation.isEmpty()) {
-						continue;
-					}
-					value = (JSONObject) parser.parse(operation);
-					if(value != null) {
-						strValue = (String) value.get("timestamp");
-						if(strValue != null) {
-							event = new Event(Long.parseLong(strValue) * 1000);
-						} else {
-							event = new Event();
-						}
-						event.setEventName((String) value.get("eventType"));
-						userOperations.add(event);
-					}
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+	public static List<UserOperation> getUserOperations(String operationsRecord) {
+		List<UserOperation> userOperations= new LinkedList<UserOperation>();
+		OperationLexer operationLexer= new OperationLexer(operationsRecord);
+		while (operationLexer.hasNextOperation()) {
+			operationLexer.startNewOperation();
+			UserOperation userOperation= createEmptyUserOperation(operationLexer.getCurrentOperationSymbol());
+			userOperation.deserialize(operationLexer);
+			userOperations.add(userOperation);
+		}
 		return userOperations;
 	}
 
