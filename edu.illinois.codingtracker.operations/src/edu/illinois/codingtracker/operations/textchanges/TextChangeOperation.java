@@ -168,11 +168,11 @@ public abstract class TextChangeOperation extends UserOperation {
 		EditorHelper.activateEditor(currentEditor);
 		if (currentEditor instanceof CompareEditor) {
 			CompareEditor compareEditor= (CompareEditor)currentEditor;
-			currentViewer= EditorHelper.getEditingSourceViewer(compareEditor);
+			//HACKED DEPENDENCY currentViewer= EditorHelper.getEditingSourceViewer(compareEditor);
 			editedFile= EditorHelper.getEditedJavaFile(compareEditor);
 		} else if (currentEditor instanceof AbstractDecoratedTextEditor) {
 			AbstractDecoratedTextEditor abstractDecoratedTextEditor= (AbstractDecoratedTextEditor)currentEditor;
-			currentViewer= EditorHelper.getEditingSourceViewer(abstractDecoratedTextEditor);
+			//HACKED DEPENDENCY currentViewer= EditorHelper.getEditingSourceViewer(abstractDecoratedTextEditor);
 			editedFile= EditorHelper.getEditedJavaFile(abstractDecoratedTextEditor);
 		}
 		currentDocument= currentViewer.getDocument();

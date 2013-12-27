@@ -112,22 +112,25 @@ public class EditorHelper {
 		return javaFile;
 	}
 
-	public static ISourceViewer getEditingSourceViewer(CompareEditor compareEditor) {
-		ISourceViewer sourceViewer= null;
-		IEditorInput editorInput= compareEditor.getEditorInput();
-		if (editorInput instanceof CompareEditorInput) {
-			CompareEditorInput compareEditorInput= (CompareEditorInput)editorInput;
-			Viewer contentViewer= compareEditorInput.getContentViewer();
-			if (contentViewer instanceof TextMergeViewer) {
-				sourceViewer= ((TextMergeViewer)contentViewer).getLeftViewer();
-			}
-		}
-		return sourceViewer;
-	}
-
-	public static ISourceViewer getEditingSourceViewer(AbstractDecoratedTextEditor editor) {
-		return editor.getHackedViewer();
-	}
+/*
+ *   MH: commented to remove hacked dependency and make the code compile
+ */
+//	public static ISourceViewer getEditingSourceViewer(CompareEditor compareEditor) {
+//		ISourceViewer sourceViewer= null;
+//		IEditorInput editorInput= compareEditor.getEditorInput();
+//		if (editorInput instanceof CompareEditorInput) {
+//			CompareEditorInput compareEditorInput= (CompareEditorInput)editorInput;
+//			Viewer contentViewer= compareEditorInput.getContentViewer();
+//			if (contentViewer instanceof TextMergeViewer) {
+//				sourceViewer= ((TextMergeViewer)contentViewer).getLeftViewer();
+//			}
+//		}
+//		return sourceViewer;
+//	}
+//
+//	public static ISourceViewer getEditingSourceViewer(AbstractDecoratedTextEditor editor) {
+//		return editor.getHackedViewer();
+//	}
 
 	public static IEditorPart getActiveEditor() {
 		return JavaPlugin.getActivePage().getActiveEditor();
