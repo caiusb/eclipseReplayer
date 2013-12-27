@@ -52,7 +52,7 @@ public class Event {
 	}
 	
 	public String getDescription() {
-		return getEventName();
+		return "";
 	}
 	
 	@Override
