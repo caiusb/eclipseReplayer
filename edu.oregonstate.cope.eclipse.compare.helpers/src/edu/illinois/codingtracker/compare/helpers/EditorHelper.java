@@ -111,7 +111,10 @@ public class EditorHelper {
 		}
 		return javaFile;
 	}
-	//COMMENTED OUT TO RUN FOR NOW MH
+
+/*
+ *   MH: commented to remove hacked dependency and make the code compile
+ */
 //	public static ISourceViewer getEditingSourceViewer(CompareEditor compareEditor) {
 //		ISourceViewer sourceViewer= null;
 //		IEditorInput editorInput= compareEditor.getEditorInput();

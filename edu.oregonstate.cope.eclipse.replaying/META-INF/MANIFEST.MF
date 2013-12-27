@@ -3,13 +3,14 @@ Bundle-ManifestVersion: 2
 Bundle-Name: edu.illinois.codingtracker.replaying
 Bundle-SymbolicName: edu.oregonstate.cope.eclipse.replaying;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: edu.oregonstate.cope.eclipse.replaying.Activator
+Bundle-Activator: edu.illinois.codingtracker.replaying.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  edu.oregonstate.cope.eclipse.operations,
  org.eclipse.jdt.core,
- edu.oregonstate.cope.eclipse.jdt.project.manipulation,
- org.eclipse.jdt.ui
+ org.eclipse.jdt.ui,
+ edu.oregonstate.cope.eclipse.jdt.project.manipulation;bundle-version="1.0.0",
+ edu.oregonstate.cope.eclipse.helpers;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: University of Illinois

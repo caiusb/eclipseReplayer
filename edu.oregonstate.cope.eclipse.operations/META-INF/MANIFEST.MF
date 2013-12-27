@@ -5,6 +5,7 @@ Bundle-SymbolicName: edu.oregonstate.cope.eclipse.operations
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: edu.illinois.codingtracker.operations,
+ edu.illinois.codingtracker.operations.ast,
  edu.illinois.codingtracker.operations.conflicteditors,
  edu.illinois.codingtracker.operations.files,
  edu.illinois.codingtracker.operations.files.snapshoted,
@@ -16,8 +17,8 @@ Export-Package: edu.illinois.codingtracker.operations,
  edu.illinois.codingtracker.operations.starts,
  edu.illinois.codingtracker.operations.textchanges
 Require-Bundle: edu.oregonstate.cope.eclipse.compare.helpers;visibility:=reexport,
- edu.oregonstate.cope.eclipse.helpers;visibility:=reexport,
  org.eclipse.jdt.core,
  org.eclipse.jdt.ui,
- edu.oregonstate.cope.eclipse.jdt.project.manipulation
+ edu.oregonstate.cope.eclipse.helpers;bundle-version="1.0.0",
+ edu.oregonstate.cope.eclipse.jdt.project.manipulation;bundle-version="1.0.0"
 Bundle-Vendor: University of Illinois
