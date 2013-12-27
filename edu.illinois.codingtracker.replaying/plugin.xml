@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Operation Sequence Replaying"
+            id="edu.illinois.codingtracker.replaying">
+      </category>
+      <view
+            name="Operation Sequence View"
+            icon="icons/sample.gif"
+            category="edu.illinois.codingtracker.replaying"
+            class="edu.illinois.codingtracker.replaying.OperationSequenceView"
+            id="edu.illinois.codingtracker.replaying.views.OperationSequenceView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.TaskList"
+               relationship="right"
+               id="edu.illinois.codingtracker.replaying.views.OperationSequenceView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+         name="Pause"
+         id="edu.illinois.codingtracker.replaying.pause" />
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key sequence="M3+P"
+		 commandId="edu.illinois.codingtracker.replaying.pause"
+		 schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+		 contextId="org.eclipse.ui.contexts.window" />
+      <key sequence="M3+P"
+		 commandId="edu.illinois.codingtracker.replaying.pause"
+		 schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+		 contextId="org.eclipse.jdt.ui.javaEditorScope" />
+      <key sequence="M3+P"
+		 commandId="edu.illinois.codingtracker.replaying.pause"
+		 schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+		 contextId="org.eclipse.ui.textEditorScope" />		 
+   </extension>
+
+</plugin>
