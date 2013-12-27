@@ -22,3 +22,5 @@ Require-Bundle: edu.oregonstate.cope.eclipse.compare.helpers;visibility:=reexpor
  edu.oregonstate.cope.eclipse.helpers;bundle-version="1.0.0",
  edu.oregonstate.cope.eclipse.jdt.project.manipulation;bundle-version="1.0.0"
 Bundle-Vendor: University of Illinois
+Import-Package: org.json.simple,
+ org.json.simple.parser
