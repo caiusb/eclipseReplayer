@@ -3,6 +3,11 @@
  */
 package edu.illinois.codingtracker.operations.resources;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.json.simple.JSONObject;
@@ -63,16 +68,12 @@ public class ExternallyModifiedResourceOperation extends ResourceOperation {
 	@Override
 	public void replay() throws CoreException {
 		IResource resource= findResource();
-		if (resource != null) {
-			if (isDeleted) {
-				//To avoid confusing the replayer that tracks the currently active editor, close the editor (if any) 
-				//of the deleted resource.
-				EditorHelper.closeAllEditorsForResource(resourcePath);
-				resource.delete(IResource.FORCE, null);
-			} else {
-				addExternallyModifiedResource(resourcePath);
-			}
+		EditorHelper.closeAllEditorsForResource(resourcePath);
+		try {
+			Files.write(Paths.get(resource.getLocation().makeAbsolute().toPortableString()), text.getBytes(), StandardOpenOption.WRITE);
+		} catch (IOException e) {
 		}
+		EditorHelper.openEditor(resourcePath);
 	}
 	
 	@Override
