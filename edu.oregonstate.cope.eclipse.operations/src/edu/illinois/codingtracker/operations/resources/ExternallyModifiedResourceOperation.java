@@ -84,8 +84,9 @@ public class ExternallyModifiedResourceOperation extends ResourceOperation {
 	@Override
 	public String toString() {
 		StringBuffer sb= new StringBuffer();
-		sb.append("Is deleted: " + isDeleted + "\n");
-		sb.append(super.toString());
+		sb.append(resourcePath);
+		sb.append(" was replaced with ");
+		sb.append(text);
 		return sb.toString();
 	}
 
