@@ -12,6 +12,7 @@ import edu.illinois.codingtracker.helpers.Configuration;
 import edu.illinois.codingtracker.operations.OperationLexer;
 import edu.illinois.codingtracker.operations.OperationSymbols;
 import edu.illinois.codingtracker.operations.OperationTextChunk;
+import edu.oregonstate.cope.clientRecorder.JSONConstants;
 
 /**
  * 
@@ -21,6 +22,7 @@ import edu.illinois.codingtracker.operations.OperationTextChunk;
 public class ExternallyModifiedResourceOperation extends ResourceOperation {
 
 	private boolean isDeleted;
+	private String text;
 
 
 	public ExternallyModifiedResourceOperation() {
@@ -75,7 +77,8 @@ public class ExternallyModifiedResourceOperation extends ResourceOperation {
 	
 	@Override
 	public void parse(JSONObject value) {
-//		value.get(ClientRecorder)
+		resourcePath = (String) value.get(JSONConstants.JSON_ENTITY_ADDRESS);
+		text = (String) value.get(JSONConstants.JSON_TEXT);
 	}
 
 	@Override
