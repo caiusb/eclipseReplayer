@@ -5,7 +5,6 @@ package edu.illinois.codingtracker.operations.starts;
 
 import org.json.simple.JSONObject;
 
-import edu.illinois.codingtracker.helpers.Configuration;
 import edu.illinois.codingtracker.operations.OperationLexer;
 import edu.illinois.codingtracker.operations.OperationSymbols;
 import edu.illinois.codingtracker.operations.OperationTextChunk;
