@@ -75,21 +75,20 @@ public class OperationDeserializer {
 	  JSONParser parser = new JSONParser();
       JSONObject value = null;
       String strValue = null;
-              for(String operation : operationsList) {
-                      try {
-                              if(operation.isEmpty()) {
-                                      continue;
-                              }
-                              value = (JSONObject) parser.parse(operation);
-                              String eventName = (String) value.get("eventType");
-                              System.out.println(eventName);
-                              addUserOperation(
-									userOperations, value, eventName);
-                      } catch (Exception e) {
-                              // TODO Auto-generated catch block
-                              e.printStackTrace();
-                      }
-              }
+      for(String operation : operationsList) {
+	      try {
+	          if(operation.isEmpty()) {
+	        	  continue;
+	          }
+	          value = (JSONObject) parser.parse(operation);
+	          String eventName = (String) value.get("eventType");
+	          System.out.println(eventName);
+	          addUserOperation(userOperations, value, eventName);
+	      } catch (Exception e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+	      }
+      }
       return userOperations;
 	}
 
