@@ -5,6 +5,7 @@ package edu.illinois.codingtracker.operations.resources;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.json.simple.JSONObject;
 
 import edu.illinois.codingtracker.compare.helpers.EditorHelper;
 import edu.illinois.codingtracker.helpers.Configuration;
@@ -70,6 +71,11 @@ public class ExternallyModifiedResourceOperation extends ResourceOperation {
 				addExternallyModifiedResource(resourcePath);
 			}
 		}
+	}
+	
+	@Override
+	public void parse(JSONObject value) {
+//		value.get(ClientRecorder)
 	}
 
 	@Override
