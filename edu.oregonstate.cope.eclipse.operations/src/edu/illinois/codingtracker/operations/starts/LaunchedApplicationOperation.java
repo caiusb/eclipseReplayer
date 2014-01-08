@@ -18,29 +18,6 @@ import edu.illinois.codingtracker.operations.UserOperation;
  */
 public class LaunchedApplicationOperation extends UserOperation {
 
-	private String launchMode;
-
-	private String launchName;
-
-	private String application;
-
-	private String product;
-
-	private boolean useProduct;
-
-	public LaunchedApplicationOperation() {
-		super();
-	}
-
-	public LaunchedApplicationOperation(String launchMode, String launchName, String application, String product, boolean useProduct) {
-		super();
-		this.launchMode= launchMode;
-		this.launchName= launchName;
-		this.application= application;
-		this.product= product;
-		this.useProduct= useProduct;
-	}
-
 	@Override
 	protected char getOperationSymbol() {
 		return OperationSymbols.APPLICATION_LAUNCHED_SYMBOL;
@@ -53,20 +30,10 @@ public class LaunchedApplicationOperation extends UserOperation {
 
 	@Override
 	protected void populateTextChunk(OperationTextChunk textChunk) {
-		textChunk.append(launchMode);
-		textChunk.append(launchName);
-		textChunk.append(application);
-		textChunk.append(product);
-		textChunk.append(useProduct);
 	}
 
 	@Override
 	protected void initializeFrom(OperationLexer operationLexer) {
-		launchMode= operationLexer.readString();
-		launchName= operationLexer.readString();
-		application= operationLexer.readString();
-		product= operationLexer.readString();
-		useProduct= Boolean.valueOf(operationLexer.readString());
 	}
 	
 	@Override
@@ -83,14 +50,7 @@ public class LaunchedApplicationOperation extends UserOperation {
 
 	@Override
 	public String toString() {
-		StringBuffer sb= new StringBuffer();
-		sb.append("Launch mode: " + launchMode + "\n");
-		sb.append("Launch name: " + launchName + "\n");
-		sb.append("Application: " + application + "\n");
-		sb.append("Product: " + product + "\n");
-		sb.append("UseProduct: " + useProduct + "\n");
-		sb.append(super.toString());
-		return sb.toString();
+		return "";
 	}
 
 }
