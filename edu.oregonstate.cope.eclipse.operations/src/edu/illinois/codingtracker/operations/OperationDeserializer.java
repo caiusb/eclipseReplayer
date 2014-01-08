@@ -58,13 +58,11 @@ public class OperationDeserializer {
 
 
 
-	private static void addUserOperation(
-			List<UserOperation> userOperations, JSONObject value,
-			String eventName) {
+	private static void addUserOperation(List<UserOperation> userOperations, JSONObject value, String eventName) {
 		UserOperation userOperation= createEmptyUserOperation(eventName);
 		if(userOperation != null){ 
-		userOperation.parse(value);
-		  userOperations.add(userOperation);
+			userOperation.parse(value);
+			userOperations.add(userOperation);
 		}
 		//return userOperation;
 	}
