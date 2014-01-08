@@ -18,6 +18,7 @@ import edu.illinois.codingtracker.operations.junit.TestSessionStartedOperation;
 import edu.illinois.codingtracker.operations.refactorings.FinishedRefactoringOperation;
 import edu.illinois.codingtracker.operations.resources.CreatedResourceOperation;
 import edu.illinois.codingtracker.operations.resources.DeletedResourceOperation;
+import edu.illinois.codingtracker.operations.resources.ExternallyModifiedResourceOperation;
 import edu.illinois.codingtracker.operations.starts.LaunchedApplicationOperation;
 import edu.illinois.codingtracker.operations.starts.StartedRefactoringOperation;
 import edu.illinois.codingtracker.operations.textchanges.PerformedTextChangeOperation;
@@ -99,6 +100,8 @@ public class OperationDeserializer {
 			userOperation= new DeletedResourceOperation();
 		}else if(operationSymbol.equals("resourceAdded")){
 			userOperation= new CreatedResourceOperation();
+		}else if(operationSymbol.equals("refresh")){
+			userOperation= new ExternallyModifiedResourceOperation();
 		}
 		//refactoringLaunch
 		
