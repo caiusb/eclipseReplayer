@@ -12,7 +12,7 @@ import edu.illinois.codingtracker.operations.UserOperation;
 
 /**
  * 
- * @author Stas Negara
+ * @author Caius Brindescu
  * 
  */
 public class LaunchedApplicationOperation extends UserOperation {
