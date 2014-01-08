@@ -10,6 +10,7 @@ import java.nio.file.StandardOpenOption;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.json.simple.JSONObject;
 
 import edu.illinois.codingtracker.compare.helpers.EditorHelper;
@@ -73,6 +74,7 @@ public class ExternallyModifiedResourceOperation extends ResourceOperation {
 			Files.write(Paths.get(resource.getLocation().makeAbsolute().toPortableString()), text.getBytes(), StandardOpenOption.WRITE);
 		} catch (IOException e) {
 		}
+		resource.refreshLocal(IResource.DEPTH_ZERO, new NullProgressMonitor());
 		EditorHelper.openEditor(resourcePath);
 	}
 	
