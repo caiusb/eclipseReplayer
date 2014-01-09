@@ -3,6 +3,10 @@
  */
 package edu.illinois.codingtracker.operations.starts;
 
+import static edu.oregonstate.cope.clientRecorder.JSONConstants.JSON_LAUNCH_ATTRIBUTES;
+
+import java.util.Map;
+
 import org.json.simple.JSONObject;
 
 import edu.illinois.codingtracker.operations.OperationLexer;
@@ -16,6 +20,8 @@ import edu.illinois.codingtracker.operations.UserOperation;
  * 
  */
 public class LaunchedApplicationOperation extends UserOperation {
+	
+	private Map launchAttributes;
 
 	@Override
 	protected char getOperationSymbol() {
@@ -37,14 +43,12 @@ public class LaunchedApplicationOperation extends UserOperation {
 	
 	@Override
 	public void parse(JSONObject value) {
-		//application= (String) value.get("entityAddress");
-		//TODO MH
+		launchAttributes = (Map) value.get(JSON_LAUNCH_ATTRIBUTES);
 	}
 
 	@Override
 	public void replay() throws Exception {
-		//do nothing
-		//
+		
 	}
 
 	@Override
