@@ -17,6 +17,7 @@ import edu.illinois.codingtracker.operations.conflicteditors.ClosedConflictEdito
 import edu.illinois.codingtracker.operations.conflicteditors.OpenedConflictEditorOperation;
 import edu.illinois.codingtracker.operations.conflicteditors.SavedConflictEditorOperation;
 import edu.illinois.codingtracker.operations.files.ClosedFileOperation;
+import edu.illinois.codingtracker.operations.files.CompareWithSnapshot;
 import edu.illinois.codingtracker.operations.files.EditedFileOperation;
 import edu.illinois.codingtracker.operations.files.EditedUnsychronizedFileOperation;
 import edu.illinois.codingtracker.operations.files.RefactoredSavedFileOperation;
@@ -66,32 +67,47 @@ import edu.illinois.codingtracker.operations.textchanges.UndoneTextChangeOperati
  */
 public class OperationDeserializer {
 
-
 	private static final String OPERATIONS_SEPARATOR = "\n\\$@\\$";
 	 
-	public static List<UserOperation> getUserOperations(String operationsRecord) {
-	  List<UserOperation> userOperations= new LinkedList<UserOperation>();
-	  String[] operationsList = operationsRecord.split(OPERATIONS_SEPARATOR);
-	  JSONParser parser = new JSONParser();
-      JSONObject value = null;
-      String strValue = null;
-              for(String operation : operationsList) {
-                      try {
-                              if(operation.isEmpty()) {
-                                      continue;
-                              }
-                              value = (JSONObject) parser.parse(operation);
-                              String eventName = (String) value.get("eventType");
-                              System.out.println(eventName);
-                              UserOperation userOperation= createEmptyUserOperation(eventName);
-                              userOperation.parse(value);
-                              userOperations.add(userOperation);
-                      } catch (Exception e) {
-                              // TODO Auto-generated catch block
-                              e.printStackTrace();
-                      }
-              }
-      return userOperations;
+	private String eventFilePath = null;
+
+	public String getEventFilePath() {
+		return eventFilePath;
+	}
+
+	public void setEventFilePath(String eventFilePath) {
+		this.eventFilePath = eventFilePath;
+	}
+	
+	public OperationDeserializer(String eventFilePath) {
+		this.eventFilePath = eventFilePath;
+	}
+	
+	public List<UserOperation> getUserOperations(String operationsRecord) {
+		List<UserOperation> userOperations = new LinkedList<UserOperation>();
+		String[] operationsList = operationsRecord.split(OPERATIONS_SEPARATOR);
+		JSONParser parser = new JSONParser();
+		JSONObject value = null;
+		String strValue = null;
+		for (String operation : operationsList) {
+			try {
+				if (operation.isEmpty()) {
+					continue;
+				}
+				value = (JSONObject) parser.parse(operation);
+				String eventName = (String) value.get("eventType");
+				System.out.println(eventName);
+				UserOperation userOperation = createEmptyUserOperation(eventName);
+				userOperation.parse(value);
+				userOperation.setEventFilePath( this.eventFilePath );
+				
+				userOperations.add(userOperation);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return userOperations;
 	}
 
 	private static UserOperation createEmptyUserOperation(String operationSymbol) {
@@ -102,8 +118,10 @@ public class OperationDeserializer {
 			userOperation= new PerformedTextChangeOperation();
 		}else if(operationSymbol.equals("fileOpen")){
 			userOperation= new EditedFileOperation();
+		}else if(operationSymbol.equals("fileSave")){
+			userOperation= new SavedFileOperation();
 		}else if(operationSymbol.equals("snapshot")){
-			userOperation= new SaveProjectSnapshot();
+			userOperation= new CompareWithSnapshot();
 		}else if(operationSymbol.equals("fileClose")){
 			userOperation= new ClosedFileOperation();
 		}else if(operationSymbol.equals("testRun")){
@@ -116,8 +134,6 @@ public class OperationDeserializer {
 		//normalLaunch
 		return userOperation;
 	}
-	
-	
 	
 //	public static List<UserOperation> getUserOperations(String operationsRecord) {
 //		List<UserOperation> userOperations= new LinkedList<UserOperation>();

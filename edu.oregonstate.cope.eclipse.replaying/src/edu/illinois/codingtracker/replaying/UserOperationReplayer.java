@@ -55,7 +55,7 @@ public class UserOperationReplayer {
 
 	private long lastSnapshotTimestamp= -1;
 
-	private enum ReplayPace {
+	public enum ReplayPace {
 		FAST, SIMULATE, CUSTOM
 	}
 
@@ -87,18 +87,22 @@ public class UserOperationReplayer {
 
 	private UserOperationExecutionThread userOperationExecutionThread;
 
+
 	private volatile boolean forcedExecutionStop= false;
 
 	private volatile boolean isPaused= false;
 
 	private IEditorPart currentEditor= null;
 
+	public UserOperationExecutionThread getUserOperationExecutionThread() {
+		return userOperationExecutionThread;
+	}
 
 	public UserOperationReplayer(OperationSequenceView operationSequenceView) {
 		this.operationSequenceView= operationSequenceView;
 	}
 
-	void addToolBarActions() {
+	public void addToolBarActions() {
 		IToolBarManager toolBarManager= operationSequenceView.getToolBarManager();
 		toolBarManager.add(createLoadOperationSequenceAction());
 		toolBarManager.add(createResetOperationSequenceAction());
@@ -199,6 +203,31 @@ public class UserOperationReplayer {
 		return markPatternAction;
 	}
 
+	public void LoadOperationsFromFile(String selectedFilePath) {
+		String operationsRecord= ResourceHelper.readFileContent(new File(selectedFilePath));
+		try {
+			OperationDeserializer deserializer = new OperationDeserializer(selectedFilePath);
+			userOperations= deserializer.getUserOperations(operationsRecord);
+		} catch (RuntimeException e) {
+			showMessage("Wrong format. Could not load user operations from file: " + selectedFilePath);
+			throw e;
+		}
+		
+	}
+	
+	public int getNumberOfUserOperations() {
+		return userOperations.size();
+	}
+	
+	public void initializeActions() {
+		createFindOperationAction();
+		createLoadOperationSequenceAction();
+		createMarkPatternAction();
+		createPauseAction();
+		createReplayAction(new Action() {}, "", "", false);
+		createResetOperationSequenceAction();
+	}
+	
 	private IAction createLoadOperationSequenceAction() {
 		loadAction= new Action() {
 			@Override
@@ -206,13 +235,7 @@ public class UserOperationReplayer {
 				FileDialog fileDialog= new FileDialog(operationSequenceView.getShell(), SWT.OPEN);
 				String selectedFilePath= fileDialog.open();
 				if (selectedFilePath != null) {
-					String operationsRecord= ResourceHelper.readFileContent(new File(selectedFilePath));
-					try {
-						userOperations= OperationDeserializer.getUserOperations(operationsRecord);
-					} catch (RuntimeException e) {
-						showMessage("Wrong format. Could not load user operations from file: " + selectedFilePath);
-						throw e;
-					}
+					LoadOperationsFromFile(selectedFilePath);
 					if (userOperations.size() > 0) {
 						resetAction.setEnabled(true);
 						findAction.setEnabled(true);
@@ -263,7 +286,7 @@ public class UserOperationReplayer {
 		return pauseAction;
 	}
 
-	private void prepareForReplay() {
+	public void prepareForReplay() {
 		initializeReplay();
 		advanceCurrentUserOperation(null);
 		operationSequenceView.setTableViewerInput(userOperations);
@@ -452,7 +475,7 @@ public class UserOperationReplayer {
 		};
 	}
 
-	private void replayUserOperationSequence(IAction executionAction, ReplayPace replayPace) {
+	public void replayUserOperationSequence(IAction executionAction, ReplayPace replayPace) {
 		if (replayPace == ReplayPace.CUSTOM) {
 			CustomDelayDialog dialog= new CustomDelayDialog(operationSequenceView.getShell());
 			if (dialog.open() == Window.CANCEL) {
@@ -471,7 +494,7 @@ public class UserOperationReplayer {
 		userOperationExecutionThread.start();
 	}
 
-	private void replayAndAdvanceCurrentUserOperation(ReplayPace replayPace, boolean isSplitReplay) {
+	public void replayAndAdvanceCurrentUserOperation(ReplayPace replayPace, boolean isSplitReplay) {
 		try {
 			if (!Configuration.isInTestMode && currentEditor != null && currentEditor != EditorHelper.getActiveEditor()) {
 				if (userOperationExecutionThread != null && userOperationExecutionThread.isAlive()) {
@@ -497,7 +520,7 @@ public class UserOperationReplayer {
 		}
 	}
 
-	private void advanceCurrentUserOperation(ReplayPace replayPace) {
+	public void advanceCurrentUserOperation(ReplayPace replayPace) {
 		UserOperation oldUserOperation= currentUserOperation;
 		currentUserOperation= getNextReplayableUserOperation();
 		if (replayPace != ReplayPace.FAST) { //Do not display additional info during a fast replay.
@@ -576,7 +599,7 @@ public class UserOperationReplayer {
 		showMessage("An exception occured while executing the current user operation");
 	}
 
-	private class UserOperationExecutionThread extends Thread {
+	public class UserOperationExecutionThread extends Thread {
 
 		private final IAction executionAction;
 
