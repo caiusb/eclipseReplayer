@@ -23,6 +23,7 @@ Require-Bundle: edu.oregonstate.cope.eclipse.compare.helpers;visibility:=reexpor
  edu.oregonstate.cope.eclipse.jdt.project.manipulation;bundle-version="1.0.0",
  org.eclipse.core.filebuffers,
  org.eclipse.core.resources,
+ edu.oregonstate.cope.clientrecorder,
  org.eclipse.ui.workbench
 Bundle-Vendor: University of Illinois
 Import-Package: org.apache.commons.io,

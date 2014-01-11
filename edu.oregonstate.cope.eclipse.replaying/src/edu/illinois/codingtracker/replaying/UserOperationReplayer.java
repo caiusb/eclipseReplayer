@@ -101,6 +101,10 @@ public class UserOperationReplayer {
 	public UserOperationReplayer(OperationSequenceView operationSequenceView) {
 		this.operationSequenceView= operationSequenceView;
 	}
+	
+	public void initializeBreakpoints() {
+		breakpoints= new HashSet<UserOperation>();
+	}
 
 	public void addToolBarActions() {
 		IToolBarManager toolBarManager= operationSequenceView.getToolBarManager();
@@ -496,14 +500,14 @@ public class UserOperationReplayer {
 
 	public void replayAndAdvanceCurrentUserOperation(ReplayPace replayPace, boolean isSplitReplay) {
 		try {
-			if (!Configuration.isInTestMode && currentEditor != null && currentEditor != EditorHelper.getActiveEditor()) {
-				if (userOperationExecutionThread != null && userOperationExecutionThread.isAlive()) {
-					forcedExecutionStop= true;
-					userOperationExecutionThread.interrupt();
-				}
-				showMessage("The current editor is wrong. Should be: \"" + currentEditor.getTitle() + "\"");
-				return;
-			}
+//			if (!Configuration.isInTestMode && currentEditor != null && currentEditor != EditorHelper.getActiveEditor()) {
+//				if (userOperationExecutionThread != null && userOperationExecutionThread.isAlive()) {
+//					forcedExecutionStop= true;
+//					userOperationExecutionThread.interrupt();
+//				}
+//				showMessage("The current editor is wrong. Should be: \"" + currentEditor.getTitle() + "\"");
+//				return;
+//			}
 			if (isSplitReplay && currentUserOperation instanceof TextChangeOperation && !isCurrentOperationSplit) {
 				isCurrentOperationSplit= true;
 				((TextChangeOperation)currentUserOperation).splitReplay();
@@ -511,7 +515,7 @@ public class UserOperationReplayer {
 				isCurrentOperationSplit= false;
 				currentUserOperation.replay();
 			}
-			currentEditor= EditorHelper.getActiveEditor();
+			//currentEditor= EditorHelper.getActiveEditor();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
