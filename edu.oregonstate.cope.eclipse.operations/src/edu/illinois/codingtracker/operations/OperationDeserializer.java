@@ -39,9 +39,13 @@ public class OperationDeserializer {
 	public String getEventFilePath() {
 		return eventFilePath;
 	}
-
-	public void setEventFilePath(String eventFilePath) {
-		this.eventFilePath = eventFilePath;
+	private static void addUserOperation(List<UserOperation> userOperations, JSONObject value, String eventName) {
+		UserOperation userOperation= createEmptyUserOperation(eventName);
+		if(userOperation != null) { 
+			userOperation.parse(value);
+			userOperations.add(userOperation);
+		}
+		//return userOperation;
 	}
 	
 	public OperationDeserializer(String eventFilePath) {
@@ -90,9 +94,7 @@ public class OperationDeserializer {
 
 	private static UserOperation createEmptyUserOperation(String operationSymbol) {
 		UserOperation userOperation = null;
-		if(operationSymbol.equals("FileInit")){
-			userOperation= new NewFileOperation();
-		}else if(operationSymbol.equals("textChange")){
+		if(operationSymbol.equals("textChange")){
 			userOperation= new PerformedTextChangeOperation();
 		}else if(operationSymbol.equals("fileOpen")){
 			userOperation= new EditedFileOperation();
@@ -110,6 +112,20 @@ public class OperationDeserializer {
 			userOperation= new LaunchedApplicationOperation(operationSymbol);
 		}else if(operationSymbol.equals("launchEnd")){
 			//userOperation= new LaunchedApplicationOperation();
+		}else if(operationSymbol.equals("fileSave")){
+			userOperation= new SavedFileOperation();
+		}else if(operationSymbol.equals("refactoringLaunch")){
+			userOperation= new StartedRefactoringOperation();
+		}else if(operationSymbol.equals("refactoringEnd")){
+			userOperation= new FinishedRefactoringOperation();
+		}else if(operationSymbol.equals("resourceRemoved")){
+			userOperation= new DeletedResourceOperation();
+		}else if(operationSymbol.equals("resourceAdded")){
+			userOperation= new CreatedResourceOperation();
+		}else if(operationSymbol.equals("refresh")){
+			userOperation= new ExternallyModifiedResourceOperation();
+		}else if(operationSymbol.equals("launchEnd")){
+			userOperation= new LaunchedApplicationOperation();
 		}else if(operationSymbol.equals("fileSave")){
 			userOperation= new SavedFileOperation();
 		}else if(operationSymbol.equals("refactoringLaunch")){

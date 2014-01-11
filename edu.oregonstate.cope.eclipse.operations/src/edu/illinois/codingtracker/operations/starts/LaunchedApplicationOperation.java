@@ -80,6 +80,7 @@ public class LaunchedApplicationOperation extends UserOperation {
 		launchConfigWorkingCopy.setAttributes(launchAttributes);
 		ILaunchConfiguration newLaunchConfig = launchConfigWorkingCopy.doSave();
 		ILaunch launch = newLaunchConfig.launch(launchMode, new NullProgressMonitor(), true);
+		//
 	}
 
 	private void writeLaunchFile(String launchName, String launchFileContents) {

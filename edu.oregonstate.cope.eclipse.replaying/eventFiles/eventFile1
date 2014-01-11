@@ -1,0 +1,71 @@
+
+$@${"timestamp":"1388967195","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","eventType":"fileOpen"}
+$@${"timestamp":"1388967195","entityAddress":"C:\\Users\\altern\\runtime-EclipseApplication\\.metadata\\.plugins\\edu.oregonstate.cope.eclipse\\RecordReplayTest-1388967195270.zip","IDE":"eclipse","eventType":"snapshot"}
+$@${"timestamp":"1388967195","text":"\r\npublic class RecordReplayTest{ }","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":0}
+$@${"timestamp":"1388967195","text":"public class RecordReplayTest {\r\n\r\n}","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":32,"eventType":"textChange","offset":2}
+$@${"timestamp":"1388967195","text":"public class RecordReplayTest {\r\n\r\n}","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":36,"eventType":"textChange","offset":2}
+$@${"timestamp":"1388967199","text":"","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":2,"eventType":"textChange","offset":0}
+$@${"timestamp":"1388967200","text":"\t","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":33}
+$@${"timestamp":"1388967201","text":"p","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":34}
+$@${"timestamp":"1388967201","text":"u","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":35}
+$@${"timestamp":"1388967201","text":"b","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":36}
+$@${"timestamp":"1388967201","text":"l","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":37}
+$@${"timestamp":"1388967201","text":"i","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":38}
+$@${"timestamp":"1388967201","text":"c","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":39}
+$@${"timestamp":"1388967201","text":" ","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":40}
+$@${"timestamp":"1388967202","text":"s","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":41}
+$@${"timestamp":"1388967202","text":"t","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":42}
+$@${"timestamp":"1388967202","text":"a","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":43}
+$@${"timestamp":"1388967202","text":"t","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":44}
+$@${"timestamp":"1388967202","text":"i","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":45}
+$@${"timestamp":"1388967202","text":"c","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":46}
+$@${"timestamp":"1388967202","text":" ","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":47}
+$@${"timestamp":"1388967203","text":"v","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":48}
+$@${"timestamp":"1388967203","text":"o","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":49}
+$@${"timestamp":"1388967203","text":"i","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":50}
+$@${"timestamp":"1388967203","text":"d","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":51}
+$@${"timestamp":"1388967203","text":" ","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":52}
+$@${"timestamp":"1388967203","text":"m","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":53}
+$@${"timestamp":"1388967204","text":"a","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":54}
+$@${"timestamp":"1388967204","text":"i","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":55}
+$@${"timestamp":"1388967204","text":"n","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":56}
+$@${"timestamp":"1388967205","text":"()","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":57}
+$@${"timestamp":"1388967205","text":"S","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":58}
+$@${"timestamp":"1388967206","text":"T","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":59}
+$@${"timestamp":"1388967206","text":"r","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":60}
+$@${"timestamp":"1388967206","text":"i","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":61}
+$@${"timestamp":"1388967206","text":"n","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":62}
+$@${"timestamp":"1388967206","text":"g","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":63}
+$@${"timestamp":"1388967207","text":"","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":5,"eventType":"textChange","offset":59}
+$@${"timestamp":"1388967208","text":"t","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":59}
+$@${"timestamp":"1388967208","text":"r","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":60}
+$@${"timestamp":"1388967208","text":"i","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":61}
+$@${"timestamp":"1388967208","text":"n","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":62}
+$@${"timestamp":"1388967208","text":"g","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":63}
+$@${"timestamp":"1388967209","text":"[]","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":64}
+$@${"timestamp":"1388967210","text":" ","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":66}
+$@${"timestamp":"1388967210","text":"a","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":67}
+$@${"timestamp":"1388967210","text":"r","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":68}
+$@${"timestamp":"1388967211","text":"g","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":69}
+$@${"timestamp":"1388967211","text":"s","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":70}
+$@${"timestamp":"1388967211","text":" ","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":72}
+$@${"timestamp":"1388967212","text":"{","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":73}
+$@${"timestamp":"1388967212","text":"\r\n\t\t\r\n\t}","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":74}
+$@${"timestamp":"1388967212","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","eventType":"fileSave"}
+$@${"timestamp":"1388967214","text":"s","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":78}
+$@${"timestamp":"1388967214","text":"y","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":79}
+$@${"timestamp":"1388967214","text":"s","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":80}
+$@${"timestamp":"1388967214","text":"o","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":81}
+$@${"timestamp":"1388967214","text":"u","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":82}
+$@${"timestamp":"1388967214","text":"t","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":83}
+$@${"timestamp":"1388967215","text":"System.out.println();","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":6,"eventType":"textChange","offset":78}
+$@${"timestamp":"1388967217","text":"\"\"","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":97}
+$@${"timestamp":"1388967219","text":"RecordReplayTest","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":98}
+$@${"timestamp":"1388967221","text":" ","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":114}
+$@${"timestamp":"1388967221","text":"o","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":115}
+$@${"timestamp":"1388967221","text":"u","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":116}
+$@${"timestamp":"1388967221","text":"t","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":117}
+$@${"timestamp":"1388967221","text":"p","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":118}
+$@${"timestamp":"1388967222","text":"u","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":119}
+$@${"timestamp":"1388967222","text":"t","changeOrigin":"user","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","len":0,"eventType":"textChange","offset":120}
+$@${"timestamp":"1388967222","entityAddress":"\/RecordReplayTest\/src\/RecordReplayTest.java","IDE":"eclipse","eventType":"fileSave"}
