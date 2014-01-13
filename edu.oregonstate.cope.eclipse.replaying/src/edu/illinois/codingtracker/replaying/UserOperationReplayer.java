@@ -52,7 +52,7 @@ import edu.illinois.codingtracker.operations.textchanges.TextChangeOperation;
  * 
  */
 public class UserOperationReplayer {
-
+	
 	private long lastSnapshotTimestamp= -1;
 
 	public enum ReplayPace {

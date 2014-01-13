@@ -8,6 +8,7 @@ import java.util.zip.ZipFile;
 
 import difflib.*;
 import edu.illinois.codingtracker.helpers.ResourceHelper;
+import edu.oregonstate.cope.eclipse.ProjectLoader;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -110,26 +111,12 @@ public class CompareWithSnapshot extends FileOperation {
 		File snapshotZipFile = new File(resourcePath);
 		String snapshotZipFileName = snapshotZipFile.getName();
 		File eventFile = new File(this.getEventFilePath());
-		String snapshotDir = eventFile.getParentFile().getParentFile().getAbsolutePath();
-		String snapshotPath = snapshotDir + File.separator + snapshotZipFileName;
+//		String snapshotDir = ;
+		String snapshotPath = eventFile.getParentFile().getParentFile().getAbsolutePath() + File.separator + snapshotZipFileName;
 		
 		try {
-			ZipFile snapshotZip = new ZipFile( snapshotPath );
-			String extractedDir = snapshotDir + File.separator + "extracted";
+			String extractedDir = ProjectLoader.Util.unzipSnapshot(snapshotPath);
 			
-			// unzipping ... 
-			Enumeration<? extends ZipEntry> entries = snapshotZip.entries();
-			while (entries.hasMoreElements()) {
-			    ZipEntry entry = entries.nextElement();
-				File entryDestination = new File(extractedDir + File.separator + entry.getName());
-			    //System.out.println("Unzipping to " + entryDestination.getAbsolutePath());
-			    entryDestination.getParentFile().mkdirs();
-			    InputStream in = snapshotZip.getInputStream(entry);
-			    OutputStream out = new FileOutputStream(entryDestination);
-			    IOUtils.copy(in, out);
-			    IOUtils.closeQuietly(in);
-			    IOUtils.closeQuietly(out);
-			}
 			IWorkspace workspace = ResourcesPlugin.getWorkspace();
 			
 			IWorkbench iworkbench = PlatformUI.getWorkbench();
@@ -153,7 +140,7 @@ public class CompareWithSnapshot extends FileOperation {
 	
 	public void deleteFolder(File folder) {
 	    File[] files = folder.listFiles();
-	    if(files!=null) { //some JVMs return null for empty dirs
+	    if( files != null ) { //some JVMs return null for empty dirs
 	        for(File f: files) {
 	            if(f.isDirectory()) {
 	                deleteFolder(f);
@@ -164,4 +151,5 @@ public class CompareWithSnapshot extends FileOperation {
 	    }
 	    folder.delete();
 	}
+	
 }

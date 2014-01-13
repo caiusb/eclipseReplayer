@@ -33,6 +33,7 @@ import edu.illinois.codingtracker.helpers.ViewerHelper;
 import edu.illinois.codingtracker.operations.UserOperation;
 import edu.illinois.codingtracker.replaying.OperationSequenceView;
 import edu.illinois.codingtracker.replaying.UserOperationReplayer;
+import edu.oregonstate.cope.eclipse.ProjectLoader;
 
 public class ReplayToSnapshotTest {
 
@@ -44,39 +45,9 @@ public class ReplayToSnapshotTest {
 	@SuppressWarnings("restriction")
 	@Before
 	public void setUp() throws Exception {
-		workspace = ResourcesPlugin.getWorkspace();
-		IProjectDescription newProjectDescription = workspace.newProjectDescription(projectName);
-		IProject newProject = workspace.getRoot().getProject(projectName);
-		if(!newProject.exists()) {
-			newProject.create(newProjectDescription, null);
-		}
-		if(!newProject.isOpen()) {
-			newProject.open(null);
-		}
 		
+		ProjectLoader.createProjectInCurrentWorkspace(projectName);
 		
-		String zipFilePath = "snapshots" + File.separator + "snapshot1.zip";
-		ZipFile zipFile = new ZipFile( zipFilePath );
-//		ZipEntry zipEntry = new ZipEntry( newProject.getLocation() + zipFilePath );
-//		ZipEntry zipEntry = zipFile.getEntry("RecordReplayTest/src/RecordReplayTest.java");
-		ZipEntry zipEntry = zipFile.entries().nextElement();
-//		ZipFile zipFile = new ZipFile(newProject.getLocation() + "snapshots" + File.separator + "snapshot1.zip");
-		ZipFileStructureProvider provider = new ZipFileStructureProvider(zipFile);
-/*		ImportOperation importOperation = new ImportOperation(
-			newProject.getFullPath(), 
-			new ZipEntry("RecordReplayTest/.project"), 
-//			zipFile,
-			provider, 
-			new IOverwriteQuery() {
-				@Override
-				public String queryOverwrite(String pathString) {
-					return ALL;
-				}
-			}
-		);*/
-//		File file = new File(newProject.getLocation() + File.separator + "snapshots" + File.separator + "snapshot1");
-//		File snapshotFile1 = new File("snapshots" + File.separator + "snapshot1");
-//		File snapshotFile2 = new File("snapshots" + File.separator + "snapshot2");
 		File snapshotsFolder = new File("snapshots");
 		boolean initializedFirstSnapshot = false;
 		ImportOperation importOperation = null;
@@ -85,19 +56,10 @@ public class ReplayToSnapshotTest {
 				
 				// importing first snapshot
 				if(!initializedFirstSnapshot) {
-					importOperation = new ImportOperation(new Path(projectName), 
-						new File(snapshotDir.getAbsolutePath() + File.separator + innerDirName + File.separator), 
-						FileSystemStructureProvider.INSTANCE, 
-						new IOverwriteQuery() {
-							@Override
-							public String queryOverwrite(String pathString) {
-								return ALL;
-							}
-						}
+					ProjectLoader.loadProjectFromSnapshot(
+						projectName, 
+						snapshotDir.getAbsolutePath() + File.separator + innerDirName + File.separator
 					);
-					
-					importOperation.setCreateContainerStructure(false);
-					importOperation.run(new NullProgressMonitor());
 					initializedFirstSnapshot = true;
 				}
 			
@@ -123,21 +85,6 @@ public class ReplayToSnapshotTest {
 	@After
 	public void tearDown() throws Exception {
 		
-	}
-	
-	@Test 
-	public void testProjectExists() {
-		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-		assertTrue(projects[0].getName().equals(projectName));
-	}
-	
-	@Test
-	public void testFileExists() {
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IPath path = Path.fromPortableString("RecordReplayTest.java");
-		String javaFilePath = workspace.getRoot().getProject(projectName).getLocation().toString() + File.separator + "snapshot1" + File.separator + "src" + File.separator + "RecordReplayTest.java";
-		File javaFile = new File(javaFilePath);
-		assertTrue(javaFile.exists() && javaFile.isFile());
 	}
 	
 	private void initializeReplayer() {

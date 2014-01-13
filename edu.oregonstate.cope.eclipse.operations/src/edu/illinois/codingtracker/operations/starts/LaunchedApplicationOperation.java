@@ -44,6 +44,9 @@ public class LaunchedApplicationOperation extends UserOperation {
 		if (mode.equals(Events.normalLaunch.toString()))
 			launchMode = ILaunchManager.RUN_MODE;
 	}
+	public LaunchedApplicationOperation() {
+		launchMode = ILaunchManager.RUN_MODE;
+	}
 
 	@Override
 	protected char getOperationSymbol() {

@@ -79,19 +79,6 @@ public class OperationDeserializer {
 		return userOperations;
 	}
 
-
-
-	private static void addUserOperation(List<UserOperation> userOperations, JSONObject value, String eventName) {
-		UserOperation userOperation= createEmptyUserOperation(eventName);
-		if(userOperation != null){ 
-			userOperation.parse(value);
-			userOperations.add(userOperation);
-		}
-		//return userOperation;
-	}
-	
-	
-
 	private static UserOperation createEmptyUserOperation(String operationSymbol) {
 		UserOperation userOperation = null;
 		if(operationSymbol.equals("textChange")){
