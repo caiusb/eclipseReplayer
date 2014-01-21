@@ -61,7 +61,7 @@ public class EditorHelper {
 
 	private static final List<ITextEditor> existingEditors= new LinkedList<ITextEditor>(); //Does not include CompareEditors.
 
-	private static final Map<String, CompareEditor> existingCompareEditors= new HashMap<String, CompareEditor>();
+	//private static final Map<String, CompareEditor> existingCompareEditors= new HashMap<String, CompareEditor>();
 
 
 	public static boolean isConflictEditor(IWorkbenchPart part) {
@@ -180,7 +180,7 @@ public class EditorHelper {
 	public static void closeAllEditors() {
 		JavaPlugin.getActivePage().closeAllEditors(false);
 		existingEditors.clear();
-		existingCompareEditors.clear();
+	//	existingCompareEditors.clear();
 	}
 
 	public static void closeEditorSynchronously(IEditorPart editorPart) {
@@ -253,18 +253,18 @@ public class EditorHelper {
 		}
 	}
 
-	public static void addCompareEditor(String editorID, CompareEditor editor) {
-		existingCompareEditors.put(editorID, editor);
-	}
-
-	public static CompareEditor getCompareEditor(String editorID) {
-		return existingCompareEditors.get(editorID);
-	}
-
-	public static void removeCompareEditor(String editorID) {
-		existingCompareEditors.remove(editorID);
-	}
-	
+//	public static void addCompareEditor(String editorID, CompareEditor editor) {
+//		existingCompareEditors.put(editorID, editor);
+//	}
+//
+//	public static CompareEditor getCompareEditor(String editorID) {
+//		return existingCompareEditors.get(editorID);
+//	}
+//
+//	public static void removeCompareEditor(String editorID) {
+//		existingCompareEditors.remove(editorID);
+//	}
+//	
 	public static IDocument getDocumentForEditor(String fileName) {
 		IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IEditorReference[] editorReferences = activeWindow.getActivePage().getEditorReferences();
