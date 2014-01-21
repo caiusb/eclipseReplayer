@@ -6,7 +6,6 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: edu.illinois.codingtracker.operations,
  edu.illinois.codingtracker.operations.ast,
- edu.illinois.codingtracker.operations.conflicteditors,
  edu.illinois.codingtracker.operations.files,
  edu.illinois.codingtracker.operations.files.snapshoted,
  edu.illinois.codingtracker.operations.junit,
