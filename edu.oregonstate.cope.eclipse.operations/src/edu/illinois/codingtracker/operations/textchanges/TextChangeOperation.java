@@ -181,19 +181,21 @@ public abstract class TextChangeOperation extends UserOperation {
 	}
 
 	private void replayTextChange() throws BadLocationException, ExecutionException {
+		currentDocument.replace(offset, length, newText);
 		//Timestamp updates are not reproducible, because the corresponding UndoableOperation2ChangeAdapter operation 
 		//is executed as a simple text change
-		if (!isTimestampUpdate()) {
-			if (Configuration.isInTestMode) {
-				replaySpecificTextChange();
-			} else {
-				currentDocument.replace(offset, length, newText);
-			}
-		}
+		
+//		if (!isTimestampUpdate()) {
+//			if (Configuration.isInTestMode) {
+//				replaySpecificTextChange();
+//			} else {
+//			}
+//		}
 	}
 
 	 private void updateCurrentState() {
-		 	EditorHelper.activateEditor(currentEditor);
+//		 	EditorHelper.activateEditor(currentEditor);
+		 	currentDocument= EditorHelper.getDocumentForEditor(fileName);
 //			 if (currentEditor instanceof CompareEditor) {
 //			 //HACKEd DEPENDENCY currentViewer= EditorHelper.getEditingSourceViewer((CompareEditor)currentEditor);
 //			 } else if (currentEditor instanceof AbstractDecoratedTextEditor) {
@@ -202,56 +204,8 @@ public abstract class TextChangeOperation extends UserOperation {
 		 	 
 		 	//currentViewer = currentEditor.
 		 	//TODO Populate currentViewer
-		 	currentDocument= EditorHelper.getDocumentForEditor(fileName);
 		 }
 		  
-//		 private IDocument getDocumentForEditor() {
-//		 	IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-//		 	IEditorReference[] editorReferences = activeWindow.getActivePage().getEditorReferences();
-//		 	for (IEditorReference editorReference : editorReferences) {
-//		 	 ITextFileBufferManager bufferManager = FileBuffers.getTextFileBufferManager();
-//		 	 IDocument document = getDocumentForEditor(editorReference);
-//		 	 if (document == null)
-//		 	 continue;
-//		 	  
-//		 	 ITextFileBuffer textFileBuffer = bufferManager.getTextFileBuffer(document);
-//		 	 String fileLocation = textFileBuffer.getLocation().toPortableString();
-//		 	 if (fileLocation.equals(fileName)) {
-//		 	 editorReference.getEditor(true).setFocus(); // might need to be done in UI thread
-//		 	 return document;
-//		 	 }
-//		 	}
-//		 	// open editor
-//		 	return openEditor();
-//		 }
-//		  
-//		 private IDocument openEditor() {
-//		 	IWorkbenchPage page = UIPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
-//		 	IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
-//		 	IEditorDescriptor desc = PlatformUI.getWorkbench().
-//		 	 getEditorRegistry().getDefaultEditor(file.getName());
-//		 	try {
-//		 	 IEditorPart openedEditor = page.openEditor(new FileEditorInput(file), desc.getId());
-//		 	 return getDocumentForEditor(openedEditor);
-//		 	} catch (PartInitException e) {
-//		 	}
-//		 	return null;
-//		 }
-//
-//		 private IDocument getDocumentForEditor(IEditorReference editorReference) {
-//		 	IEditorPart editorPart = editorReference.getEditor(true);
-//		 	return getDocumentForEditor(editorPart);
-//		 }
-//
-//		 private IDocument getDocumentForEditor(IEditorPart editorPart) {
-//		 	if (editorPart instanceof MultiPageEditorPart) {
-//		 	 //((MultiPageEditorPart) editorPart).addPageChangedListener(new MultiEditorPageChangedListener());
-//		 	 return null;
-//		 	}
-//		 	ISourceViewer sourceViewer = (ISourceViewer) editorPart.getAdapter(ITextOperationTarget.class);
-//		 	IDocument document = sourceViewer.getDocument();
-//		 	return document;
-//		 }
 
 	/**
 	 * Valid only during replay.
@@ -366,20 +320,20 @@ public abstract class TextChangeOperation extends UserOperation {
 		return sb.toString();
 	}
 
-	@Override
-	public boolean isTestReplayRecorded() {
-		return isRecordedWhileRefactoring || !isTimestampUpdate();
-	}
+//	@Override
+//	public boolean isTestReplayRecorded() {
+//		return isRecordedWhileRefactoring || !isTimestampUpdate();
+//	}
 
-	/**
-	 * If a recorded text change operation does not change anything in the document, it is a
-	 * timestamp update (happens when an UndoableOperation2ChangeAdapter is undone/redone)
-	 * 
-	 * @return
-	 */
-	private boolean isTimestampUpdate() {
-		return newText.isEmpty() && replacedText.isEmpty() && offset == 0 && length == 0;
-	}
+//	/**
+//	 * If a recorded text change operation does not change anything in the document, it is a
+//	 * timestamp update (happens when an UndoableOperation2ChangeAdapter is undone/redone)
+//	 * 
+//	 * @return
+//	 */
+//	private boolean isTimestampUpdate() {
+//		return newText.isEmpty() && replacedText.isEmpty() && offset == 0 && length == 0;
+//	}
 
 	protected abstract void replaySpecificTextChange() throws BadLocationException, ExecutionException;
 
