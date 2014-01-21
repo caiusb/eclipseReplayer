@@ -13,25 +13,36 @@ import java.util.Set;
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.ResourceNode;
-import org.eclipse.compare.contentmergeviewer.TextMergeViewer;
 import org.eclipse.compare.internal.CompareEditor;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
+import org.eclipse.core.filebuffers.FileBuffers;
+import org.eclipse.core.filebuffers.ITextFileBuffer;
+import org.eclipse.core.filebuffers.ITextFileBufferManager;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.team.internal.ui.mapping.ModelCompareEditorInput;
+import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.UIPlugin;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -253,5 +264,55 @@ public class EditorHelper {
 	public static void removeCompareEditor(String editorID) {
 		existingCompareEditors.remove(editorID);
 	}
+	
+	public static IDocument getDocumentForEditor(String fileName) {
+		IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		IEditorReference[] editorReferences = activeWindow.getActivePage().getEditorReferences();
+		for (IEditorReference editorReference : editorReferences) {
+			ITextFileBufferManager bufferManager = FileBuffers.getTextFileBufferManager();
+			IDocument document = getDocumentForEditor(editorReference);
+			if (document == null)
+				continue;
+
+			ITextFileBuffer textFileBuffer = bufferManager.getTextFileBuffer(document);
+			String fileLocation = textFileBuffer.getLocation().toPortableString();
+			if (fileLocation.equals(fileName)) {
+				editorReference.getEditor(true).setFocus(); // might need to be
+															// done in UI thread
+				return document;
+			}
+		}
+		// open editor
+		return openIEditor(fileName);
+	}
+
+	private static  IDocument openIEditor(String fileName) {
+		IWorkbenchPage page = UIPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
+		IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(file.getName());
+		try {
+			IEditorPart openedEditor = page.openEditor(new FileEditorInput(file), desc.getId());
+			return getDocumentForEditor(openedEditor);
+		} catch (PartInitException e) {
+		}
+		return null;
+	}
+
+	private static IDocument getDocumentForEditor(IEditorReference editorReference) {
+		IEditorPart editorPart = editorReference.getEditor(true);
+		return getDocumentForEditor(editorPart);
+	}
+
+	private static IDocument getDocumentForEditor(IEditorPart editorPart) {
+		if (editorPart instanceof MultiPageEditorPart) {
+			// ((MultiPageEditorPart) editorPart).addPageChangedListener(new
+			// MultiEditorPageChangedListener());
+			return null;
+		}
+		ISourceViewer sourceViewer = (ISourceViewer) editorPart.getAdapter(ITextOperationTarget.class);
+		IDocument document = sourceViewer.getDocument();
+		return document;
+	}
+
 
 }
