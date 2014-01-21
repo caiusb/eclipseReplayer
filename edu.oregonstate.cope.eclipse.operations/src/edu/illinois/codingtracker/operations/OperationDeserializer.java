@@ -10,7 +10,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import edu.illinois.codingtracker.operations.files.ClosedFileOperation;
-import edu.illinois.codingtracker.operations.files.CompareWithSnapshot;
 import edu.illinois.codingtracker.operations.files.EditedFileOperation;
 import edu.illinois.codingtracker.operations.files.SaveProjectSnapshot;
 import edu.illinois.codingtracker.operations.files.SavedFileOperation;
@@ -32,52 +31,44 @@ import edu.illinois.codingtracker.operations.textchanges.PerformedTextChangeOper
  */
 public class OperationDeserializer {
 
+
 	private static final String OPERATIONS_SEPARATOR = "\n\\$@\\$";
 	 
-	private String eventFilePath = null;
-
-	public String getEventFilePath() {
-		return eventFilePath;
+	public static List<UserOperation> getUserOperations(String operationsRecord) {
+	  List<UserOperation> userOperations= new LinkedList<UserOperation>();
+	  String[] operationsList = operationsRecord.split(OPERATIONS_SEPARATOR);
+	  JSONParser parser = new JSONParser();
+      JSONObject value = null;
+      String strValue = null;
+      for(String operation : operationsList) {
+	      try {
+	          if(operation.isEmpty()) {
+	        	  continue;
+	          }
+	          value = (JSONObject) parser.parse(operation);
+	          String eventName = (String) value.get("eventType");
+	          System.out.println(eventName);
+	          addUserOperation(userOperations, value, eventName);
+	      } catch (Exception e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+	      }
+      }
+      return userOperations;
 	}
+
+
+
 	private static void addUserOperation(List<UserOperation> userOperations, JSONObject value, String eventName) {
 		UserOperation userOperation= createEmptyUserOperation(eventName);
-		if(userOperation != null) { 
+		if(userOperation != null){ 
 			userOperation.parse(value);
 			userOperations.add(userOperation);
 		}
 		//return userOperation;
 	}
 	
-	public OperationDeserializer(String eventFilePath) {
-		this.eventFilePath = eventFilePath;
-	}
 	
-	public List<UserOperation> getUserOperations(String operationsRecord) {
-		List<UserOperation> userOperations = new LinkedList<UserOperation>();
-		String[] operationsList = operationsRecord.split(OPERATIONS_SEPARATOR);
-		JSONParser parser = new JSONParser();
-		JSONObject value = null;
-		String strValue = null;
-		for (String operation : operationsList) {
-			try {
-				if (operation.isEmpty()) {
-					continue;
-				}
-				value = (JSONObject) parser.parse(operation);
-				String eventName = (String) value.get("eventType");
-				System.out.println(eventName);
-				UserOperation userOperation = createEmptyUserOperation(eventName);
-				userOperation.parse(value);
-				userOperation.setEventFilePath( this.eventFilePath );
-				
-				userOperations.add(userOperation);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return userOperations;
-	}
 
 	private static UserOperation createEmptyUserOperation(String operationSymbol) {
 		UserOperation userOperation = null;
@@ -85,10 +76,8 @@ public class OperationDeserializer {
 			userOperation= new PerformedTextChangeOperation();
 		}else if(operationSymbol.equals("fileOpen")){
 			userOperation= new EditedFileOperation();
-		}else if(operationSymbol.equals("fileSave")){
-			userOperation= new SavedFileOperation();
 		}else if(operationSymbol.equals("snapshot")){
-			userOperation= new CompareWithSnapshot();
+			userOperation= new SaveProjectSnapshot();
 		}else if(operationSymbol.equals("fileClose")){
 			userOperation= new ClosedFileOperation();
 		}else if(operationSymbol.equals("testRun")){
@@ -111,20 +100,6 @@ public class OperationDeserializer {
 			userOperation= new CreatedResourceOperation();
 		}else if(operationSymbol.equals("refresh")){
 			userOperation= new ExternallyModifiedResourceOperation();
-		}else if(operationSymbol.equals("launchEnd")){
-			userOperation= new LaunchedApplicationOperation();
-		}else if(operationSymbol.equals("fileSave")){
-			userOperation= new SavedFileOperation();
-		}else if(operationSymbol.equals("refactoringLaunch")){
-			userOperation= new StartedRefactoringOperation();
-		}else if(operationSymbol.equals("refactoringEnd")){
-			userOperation= new FinishedRefactoringOperation();
-		}else if(operationSymbol.equals("resourceRemoved")){
-			userOperation= new DeletedResourceOperation();
-		}else if(operationSymbol.equals("resourceAdded")){
-			userOperation= new CreatedResourceOperation();
-		}else if(operationSymbol.equals("refresh")){
-			userOperation= new ExternallyModifiedResourceOperation();
 		}
 		//refactoringLaunch
 		
@@ -132,6 +107,8 @@ public class OperationDeserializer {
 		//normalLaunch
 		return userOperation;
 	}
+	
+	
 	
 //	public static List<UserOperation> getUserOperations(String operationsRecord) {
 //		List<UserOperation> userOperations= new LinkedList<UserOperation>();

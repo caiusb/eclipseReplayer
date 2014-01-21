@@ -50,13 +50,5 @@ public class SavedFileOperation extends BreakableResourceOperation {
 			Debugger.debugWarning("Ignored save of the non existent editor:\n" + this);
 		}
 	}
-	
-	@Override
-	public void replay() throws CoreException {
- 		ITextEditor editor= saveResourceInEditor();
-		if (editor == null) {
-			Debugger.debugWarning("Ignored save of the non existent editor:\n" + this);
-		}
-	}
 
 }
