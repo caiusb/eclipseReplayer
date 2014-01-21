@@ -26,7 +26,16 @@ public abstract class UserOperation {
 
 	private long timestamp;
 
+	private String eventFilePath = null;
 
+	public String getEventFilePath() {
+		return eventFilePath;
+	}
+
+	public void setEventFilePath(String eventFilePath) {
+		this.eventFilePath = eventFilePath;
+	}
+	
 	public UserOperation() {
 		timestamp= System.currentTimeMillis();
 	}
@@ -34,7 +43,7 @@ public abstract class UserOperation {
 	public UserOperation(long timestamp) {
 		this.timestamp= timestamp;
 	}
-
+	
 	public OperationTextChunk generateSerializationText() {
 		OperationTextChunk textChunk= new OperationTextChunk(getOperationSymbol());
 		populateTextChunk(textChunk);

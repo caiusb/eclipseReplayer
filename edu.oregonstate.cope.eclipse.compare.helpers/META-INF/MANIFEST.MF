@@ -16,6 +16,6 @@ Require-Bundle: org.eclipse.core.resources;visibility:=reexport,
  org.eclipse.ui.ide;visibility:=reexport,
  org.eclipse.jdt.core,
  org.eclipse.jdt.ui,
- edu.oregonstate.cope.eclipse.helpers;bundle-version="1.0.0",
- edu.oregonstate.cope.eclipse.jdt.project.manipulation;bundle-version="1.0.0"
+ edu.oregonstate.cope.eclipse.helpers,
+ edu.oregonstate.cope.eclipse.jdt.project.manipulation
 Export-Package: edu.illinois.codingtracker.compare.helpers

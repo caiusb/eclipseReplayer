@@ -10,5 +10,6 @@ Require-Bundle: org.eclipse.core.resources;visibility:=reexport,
  org.eclipse.core.runtime;visibility:=reexport,
  org.eclipse.ltk.core.refactoring;visibility:=reexport,
  org.eclipse.ui.editors;visibility:=reexport,
- org.eclipse.jface.text;visibility:=reexport
+ org.eclipse.jface.text;visibility:=reexport,
+ org.eclipse.ui.workbench
 Bundle-Vendor: University of Illinois

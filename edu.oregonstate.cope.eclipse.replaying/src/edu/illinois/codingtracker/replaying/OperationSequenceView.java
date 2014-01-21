@@ -61,6 +61,7 @@ public class OperationSequenceView extends ViewPart {
 
 	private final UserOperationReplayer userOperationReplayer;
 
+
 	private TableViewer tableViewer;
 
 	private Text operationTextPane;
@@ -73,6 +74,10 @@ public class OperationSequenceView extends ViewPart {
 		userOperationReplayer= new UserOperationReplayer(this);
 	}
 
+	public UserOperationReplayer getUserOperationReplayer() {
+		return userOperationReplayer;
+	}
+	
 	@Override
 	public void setFocus() {
 		tableViewer.getControl().setFocus();

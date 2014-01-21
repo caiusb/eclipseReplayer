@@ -44,6 +44,9 @@ public class LaunchedApplicationOperation extends UserOperation {
 		if (mode.equals(Events.normalLaunch.toString()))
 			launchMode = ILaunchManager.RUN_MODE;
 	}
+	public LaunchedApplicationOperation() {
+		launchMode = ILaunchManager.RUN_MODE;
+	}
 
 	@Override
 	protected char getOperationSymbol() {
@@ -80,6 +83,7 @@ public class LaunchedApplicationOperation extends UserOperation {
 		launchConfigWorkingCopy.setAttributes(launchAttributes);
 		ILaunchConfiguration newLaunchConfig = launchConfigWorkingCopy.doSave();
 		ILaunch launch = newLaunchConfig.launch(launchMode, new NullProgressMonitor(), true);
+		//
 	}
 
 	private void writeLaunchFile(String launchName, String launchFileContents) {
