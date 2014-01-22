@@ -275,9 +275,19 @@ public class EditorHelper {
 			// MultiEditorPageChangedListener());
 			return null;
 		}
-		ISourceViewer sourceViewer = (ISourceViewer) editorPart.getAdapter(ITextOperationTarget.class);
+		
+		ISourceViewer sourceViewer = getViewerForEditor(editorPart);
 		IDocument document = sourceViewer.getDocument();
 		return document;
+	}
+
+	private static ISourceViewer getViewerForEditor(IEditorPart editorPart) {
+		ISourceViewer sourceViewer = (ISourceViewer) editorPart.getAdapter(ITextOperationTarget.class);
+		return sourceViewer;
+	}
+
+	public static ISourceViewer getViewerForEditor(String fileName) throws PartInitException, JavaModelException {
+		return getViewerForEditor(getExistingEditor(fileName));
 	}
 
 }

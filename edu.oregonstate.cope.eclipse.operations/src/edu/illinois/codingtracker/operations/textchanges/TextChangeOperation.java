@@ -196,7 +196,12 @@ public abstract class TextChangeOperation extends UserOperation {
 
 	 private void updateCurrentState() {
 //		 	EditorHelper.activateEditor(currentEditor);
-		 	currentDocument= EditorHelper.getDocumentForEditor(fileName);
+		 	try {
+				currentDocument= EditorHelper.getDocumentForEditor(fileName);
+				currentViewer = EditorHelper.getViewerForEditor(fileName);
+			} catch (PartInitException | JavaModelException e) {
+				throw new RuntimeException(e);
+			}
 //			 if (currentEditor instanceof CompareEditor) {
 //			 //HACKEd DEPENDENCY currentViewer= EditorHelper.getEditingSourceViewer((CompareEditor)currentEditor);
 //			 } else if (currentEditor instanceof AbstractDecoratedTextEditor) {
@@ -204,7 +209,7 @@ public abstract class TextChangeOperation extends UserOperation {
 //			 }
 		 	 
 		 	//currentViewer = currentEditor.
-		 	//TODO Populate currentViewer
+		 	
 		 }
 		  
 
