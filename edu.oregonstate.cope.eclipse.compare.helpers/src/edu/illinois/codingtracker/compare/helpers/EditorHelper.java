@@ -157,20 +157,6 @@ public class EditorHelper {
 		existingEditors.remove(editorPart);
 	}
 
-	/**
-	 * Has a side effect of bringing to top the newly created editor.
-	 * 
-	 * @return
-	 * @throws JavaModelException
-	 * @throws PartInitException
-	 */
-	public static ITextEditor createEditor(String filePath) throws JavaModelException, PartInitException {
-		IFile file = (IFile) ResourceHelper.findWorkspaceMember(filePath);
-		ITextEditor newTextEditor = (ITextEditor) JavaUI.openInEditor(JavaCore.createCompilationUnitFrom(file));
-		addNewEditorToExistingEditors(newTextEditor);
-		return newTextEditor;
-	}
-
 	public static Set<ITextEditor> getExistingEditors(String resourcePath) throws PartInitException {
 		Set<ITextEditor> existingResourceEditors = new HashSet<ITextEditor>();
 		for (ITextEditor textEditor : existingEditors) {
@@ -220,6 +206,20 @@ public class EditorHelper {
 		}
 	}
 
+	/**
+	 * Has a side effect of bringing to top the newly created editor.
+	 * 
+	 * @return
+	 * @throws JavaModelException
+	 * @throws PartInitException
+	 */
+	public static ITextEditor createEditor(String filePath) throws JavaModelException, PartInitException {
+		IFile file = (IFile) ResourceHelper.findWorkspaceMember(filePath);
+		ITextEditor newTextEditor = (ITextEditor) JavaUI.openInEditor(JavaCore.createCompilationUnitFrom(file), false, false);
+//		addNewEditorToExistingEditors(newTextEditor);
+		return newTextEditor;
+	}
+
 	public static void activateEditor(IEditorPart editor) {
 		JavaPlugin.getActivePage().activate(editor);
 //		if (!(editor instanceof CompareEditor)) {
@@ -233,18 +233,13 @@ public class EditorHelper {
 //		}
 	}
 
-	public static ITextEditor getExistingEditor(String resourcePath) throws PartInitException {
+	public static ITextEditor getExistingEditor(String resourcePath) throws PartInitException, JavaModelException {
 		 ITextEditor editor = getExistingEditorForResource(resourcePath);
 		 if (editor == null)
-			 editor = getNewEditorForResource(resourcePath);
+			 editor = createEditor(resourcePath);
 		 
 		 activateEditor(editor);
 		 return editor;
-	}
-
-	private static ITextEditor getNewEditorForResource(String resourcePath) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	private static ITextEditor getExistingEditorForResource(String resourcePath) throws PartInitException {

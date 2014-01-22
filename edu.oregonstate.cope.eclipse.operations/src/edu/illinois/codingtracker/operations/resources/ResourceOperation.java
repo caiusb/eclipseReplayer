@@ -118,7 +118,7 @@ public abstract class ResourceOperation extends UserOperation {
 		}
 	}
 
-	protected ITextEditor saveResourceInEditor() throws PartInitException {
+	protected ITextEditor saveResourceInEditor() throws PartInitException, JavaModelException {
 		ITextEditor editor= EditorHelper.getExistingEditor(resourcePath);
 		if (editor != null) {
 			editor.doSave(null);
