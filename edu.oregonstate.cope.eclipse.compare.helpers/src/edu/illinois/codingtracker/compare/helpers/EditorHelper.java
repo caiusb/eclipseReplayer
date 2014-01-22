@@ -265,44 +265,10 @@ public class EditorHelper {
 		return null;
 	}
 	
- 	public static IDocument getDocumentForEditor(String fileName) {
-		IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		IEditorReference[] editorReferences = activeWindow.getActivePage().getEditorReferences();
-		for (IEditorReference editorReference : editorReferences) {
-			ITextFileBufferManager bufferManager = FileBuffers.getTextFileBufferManager();
-			IDocument document = getDocumentForEditor(editorReference);
-			if (document == null)
-				continue;
-
-			ITextFileBuffer textFileBuffer = bufferManager.getTextFileBuffer(document);
-			String fileLocation = textFileBuffer.getLocation().toPortableString();
-			if (fileLocation.equals(fileName)) {
-				editorReference.getEditor(true).setFocus(); // might need to be
-															// done in UI thread
-				return document;
-			}
-		}
-		// open editor
-		return openIEditor(fileName);
+	public static IDocument getDocumentForEditor(String resourcePath) throws PartInitException, JavaModelException{
+		return getDocumentForEditor(getExistingEditor(resourcePath));
 	}
-
-	private static IDocument openIEditor(String fileName) {
-		IWorkbenchPage page = UIPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
-		IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(file.getName());
-		try {
-			IEditorPart openedEditor = page.openEditor(new FileEditorInput(file), desc.getId());
-			return getDocumentForEditor(openedEditor);
-		} catch (PartInitException e) {
-		}
-		return null;
-	}
-
-	private static IDocument getDocumentForEditor(IEditorReference editorReference) {
-		IEditorPart editorPart = editorReference.getEditor(true);
-		return getDocumentForEditor(editorPart);
-	}
-
+	
 	private static IDocument getDocumentForEditor(IEditorPart editorPart) {
 		if (editorPart instanceof MultiPageEditorPart) {
 			// ((MultiPageEditorPart) editorPart).addPageChangedListener(new
