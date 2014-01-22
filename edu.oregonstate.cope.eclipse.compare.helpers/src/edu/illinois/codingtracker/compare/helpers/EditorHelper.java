@@ -3,11 +3,9 @@
  */
 package edu.illinois.codingtracker.compare.helpers;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.compare.CompareEditorInput;
@@ -30,13 +28,11 @@ import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.team.internal.ui.mapping.ModelCompareEditorInput;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -57,52 +53,31 @@ import edu.illinois.codingtracker.helpers.ResourceHelper;
 @SuppressWarnings("restriction")
 public class EditorHelper {
 
-	private static final int MAXIMUM_OPEN_EDITORS_COUNT= 50; //Does not limit the number of CompareEditors.
+	private static final int MAXIMUM_OPEN_EDITORS_COUNT = 50; // Does not limit
+																// the number of
+																// CompareEditors.
 
-	private static final List<ITextEditor> existingEditors= new LinkedList<ITextEditor>(); //Does not include CompareEditors.
-
-	//private static final Map<String, CompareEditor> existingCompareEditors= new HashMap<String, CompareEditor>();
-
-
-	public static boolean isConflictEditor(IWorkbenchPart part) {
-		if (!(part instanceof CompareEditor)) {
-			return false;
-		}
-		//TODO: Maybe some other inputs (not of a conflict editor) are good for tracking and are not ModelCompareEditorInput
-		if (((CompareEditor)part).getEditorInput() instanceof ModelCompareEditorInput) {
-			return false;
-		}
-		return true;
-	}
-
-	public static String getConflictEditorInitialContent(CompareEditor compareEditor) {
-		CompareEditorInput compareEditorInput= (CompareEditorInput)compareEditor.getEditorInput();
-		ICompareInput compareInput= (ICompareInput)compareEditorInput.getCompareResult();
-		ResourceNode resourceNode= (ResourceNode)compareInput.getLeft();
-		return new String(resourceNode.getContent());
-	}
-
-	public static String getConflictEditorID(CompareEditor compareEditor) {
-		String compareEditorString= compareEditor.toString();
-		return compareEditorString.substring(compareEditorString.lastIndexOf('@') + 1);
-	}
+	private static final List<ITextEditor> existingEditors = new LinkedList<ITextEditor>(); // Does
+																							// not
+																							// include
+																							// CompareEditors.
 
 	public static IFile getEditedJavaFile(CompareEditor compareEditor) {
-		IFile javaFile= null;
-		IEditorInput editorInput= compareEditor.getEditorInput();
+		IFile javaFile = null;
+		IEditorInput editorInput = compareEditor.getEditorInput();
 		if (editorInput instanceof CompareEditorInput) {
-			CompareEditorInput compareEditorInput= (CompareEditorInput)editorInput;
-			Object compareResult= compareEditorInput.getCompareResult();
+			CompareEditorInput compareEditorInput = (CompareEditorInput) editorInput;
+			Object compareResult = compareEditorInput.getCompareResult();
 			if (compareResult instanceof ICompareInput) {
-				ICompareInput compareInput= (ICompareInput)compareResult;
-				ITypedElement leftTypedElement= compareInput.getLeft();
+				ICompareInput compareInput = (ICompareInput) compareResult;
+				ITypedElement leftTypedElement = compareInput.getLeft();
 				if (leftTypedElement instanceof ResourceNode) {
-					ResourceNode resourceNode= (ResourceNode)leftTypedElement;
-					IResource resource= resourceNode.getResource();
+					ResourceNode resourceNode = (ResourceNode) leftTypedElement;
+					IResource resource = resourceNode.getResource();
 					if (resource instanceof IFile) {
-						IFile file= (IFile)resource;
+						IFile file = (IFile) resource;
 						if (ResourceHelper.isJavaFile(file)) {
-							javaFile= file;
+							javaFile = file;
 						}
 					}
 				}
@@ -112,36 +87,38 @@ public class EditorHelper {
 	}
 
 	public static IFile getEditedJavaFile(AbstractDecoratedTextEditor editor) {
-		IFile javaFile= null;
-		IEditorInput editorInput= editor.getEditorInput();
+		IFile javaFile = null;
+		IEditorInput editorInput = editor.getEditorInput();
 		if (editorInput instanceof FileEditorInput) {
-			IFile file= ((FileEditorInput)editorInput).getFile();
+			IFile file = ((FileEditorInput) editorInput).getFile();
 			if (ResourceHelper.isJavaFile(file)) {
-				javaFile= file;
+				javaFile = file;
 			}
 		}
 		return javaFile;
 	}
 
-/*
- *   MH: commented to remove hacked dependency and make the code compile
- */
-//	public static ISourceViewer getEditingSourceViewer(CompareEditor compareEditor) {
-//		ISourceViewer sourceViewer= null;
-//		IEditorInput editorInput= compareEditor.getEditorInput();
-//		if (editorInput instanceof CompareEditorInput) {
-//			CompareEditorInput compareEditorInput= (CompareEditorInput)editorInput;
-//			Viewer contentViewer= compareEditorInput.getContentViewer();
-//			if (contentViewer instanceof TextMergeViewer) {
-//				sourceViewer= ((TextMergeViewer)contentViewer).getLeftViewer();
-//			}
-//		}
-//		return sourceViewer;
-//	}
-//
-//	public static ISourceViewer getEditingSourceViewer(AbstractDecoratedTextEditor editor) {
-//		return editor.getHackedViewer();
-//	}
+	/*
+	 * MH: commented to remove hacked dependency and make the code compile
+	 */
+	// public static ISourceViewer getEditingSourceViewer(CompareEditor
+	// compareEditor) {
+	// ISourceViewer sourceViewer= null;
+	// IEditorInput editorInput= compareEditor.getEditorInput();
+	// if (editorInput instanceof CompareEditorInput) {
+	// CompareEditorInput compareEditorInput= (CompareEditorInput)editorInput;
+	// Viewer contentViewer= compareEditorInput.getContentViewer();
+	// if (contentViewer instanceof TextMergeViewer) {
+	// sourceViewer= ((TextMergeViewer)contentViewer).getLeftViewer();
+	// }
+	// }
+	// return sourceViewer;
+	// }
+	//
+	// public static ISourceViewer
+	// getEditingSourceViewer(AbstractDecoratedTextEditor editor) {
+	// return editor.getHackedViewer();
+	// }
 
 	public static IEditorPart getActiveEditor() {
 		return JavaPlugin.getActivePage().getActiveEditor();
@@ -156,11 +133,11 @@ public class EditorHelper {
 	}
 
 	public static ITextEditor openEditor(String filePath) throws CoreException {
-		ITextEditor fileEditor= getExistingEditor(filePath);
+		ITextEditor fileEditor = getExistingEditor(filePath);
 		if (fileEditor != null) {
 			activateEditor(fileEditor);
 		} else {
-			fileEditor= createEditor(filePath);
+			fileEditor = createEditor(filePath);
 		}
 		return fileEditor;
 	}
@@ -168,24 +145,25 @@ public class EditorHelper {
 	public static void activateEditor(IEditorPart editor) {
 		JavaPlugin.getActivePage().activate(editor);
 		if (!(editor instanceof CompareEditor)) {
-			//Move the activated editor to the front of the existing editors list as the most recent activated editor.
-			boolean isExistingEditor= existingEditors.remove(editor);
+			// Move the activated editor to the front of the existing editors
+			// list as the most recent activated editor.
+			boolean isExistingEditor = existingEditors.remove(editor);
 			if (!isExistingEditor) {
 				throw new RuntimeException("Trying to activate an editor that is not part of the existing editors list: " + editor);
 			}
-			existingEditors.add(0, (ITextEditor)editor);
+			existingEditors.add(0, (ITextEditor) editor);
 		}
 	}
 
 	public static void closeAllEditors() {
 		JavaPlugin.getActivePage().closeAllEditors(false);
 		existingEditors.clear();
-	//	existingCompareEditors.clear();
+		// existingCompareEditors.clear();
 	}
 
 	public static void closeEditorSynchronously(IEditorPart editorPart) {
-		//This closes the given editor synchronously. 
-		boolean success= editorPart.getSite().getPage().closeEditor(editorPart, false);
+		// This closes the given editor synchronously.
+		boolean success = editorPart.getSite().getPage().closeEditor(editorPart, false);
 		if (!success) {
 			throw new RuntimeException("Could not close editor: " + editorPart);
 		}
@@ -200,17 +178,17 @@ public class EditorHelper {
 	 * @throws PartInitException
 	 */
 	public static ITextEditor createEditor(String filePath) throws JavaModelException, PartInitException {
-		IFile file= (IFile)ResourceHelper.findWorkspaceMember(filePath);
-		ITextEditor newTextEditor= (ITextEditor)JavaUI.openInEditor(JavaCore.createCompilationUnitFrom(file));
+		IFile file = (IFile) ResourceHelper.findWorkspaceMember(filePath);
+		ITextEditor newTextEditor = (ITextEditor) JavaUI.openInEditor(JavaCore.createCompilationUnitFrom(file));
 		addNewEditorToExistingEditors(newTextEditor);
 		return newTextEditor;
 	}
 
 	public static Set<ITextEditor> getExistingEditors(String resourcePath) throws PartInitException {
-		Set<ITextEditor> existingResourceEditors= new HashSet<ITextEditor>();
+		Set<ITextEditor> existingResourceEditors = new HashSet<ITextEditor>();
 		for (ITextEditor textEditor : existingEditors) {
-			IEditorInput editorInput= textEditor.getEditorInput();
-			if (editorInput instanceof FileEditorInput && (ResourceHelper.getPortableResourcePath(((FileEditorInput)editorInput).getFile()).startsWith(resourcePath))) {
+			IEditorInput editorInput = textEditor.getEditorInput();
+			if (editorInput instanceof FileEditorInput && (ResourceHelper.getPortableResourcePath(((FileEditorInput) editorInput).getFile()).startsWith(resourcePath))) {
 				existingResourceEditors.add(textEditor);
 			}
 		}
@@ -218,7 +196,7 @@ public class EditorHelper {
 	}
 
 	public static ITextEditor getExistingEditor(String resourcePath) throws PartInitException {
-		Set<ITextEditor> existingEditors= getExistingEditors(resourcePath);
+		Set<ITextEditor> existingEditors = getExistingEditors(resourcePath);
 		if (!existingEditors.isEmpty()) {
 			return existingEditors.iterator().next();
 		}
@@ -236,15 +214,17 @@ public class EditorHelper {
 			throw new RuntimeException("The new editor is already in the existing editors list: " + textEditor);
 		}
 
-		//Add the new editor to the front of the existing editors list as the most recent new editor.
+		// Add the new editor to the front of the existing editors list as the
+		// most recent new editor.
 		existingEditors.add(0, textEditor);
 
-		//Ensure the size of the existing editors list does not exceed the maximum allowed size.
-		int existingEditorsCount= existingEditors.size();
+		// Ensure the size of the existing editors list does not exceed the
+		// maximum allowed size.
+		int existingEditorsCount = existingEditors.size();
 		if (existingEditorsCount > MAXIMUM_OPEN_EDITORS_COUNT) {
-			//Close the oldest not dirty editor.
-			for (int i= existingEditorsCount - 1; i >= 0; i--) {
-				ITextEditor existingEditor= existingEditors.get(i);
+			// Close the oldest not dirty editor.
+			for (int i = existingEditorsCount - 1; i >= 0; i--) {
+				ITextEditor existingEditor = existingEditors.get(i);
 				if (!existingEditor.isDirty()) {
 					closeEditorSynchronously(existingEditor);
 					return;
@@ -253,18 +233,19 @@ public class EditorHelper {
 		}
 	}
 
-//	public static void addCompareEditor(String editorID, CompareEditor editor) {
-//		existingCompareEditors.put(editorID, editor);
-//	}
-//
-//	public static CompareEditor getCompareEditor(String editorID) {
-//		return existingCompareEditors.get(editorID);
-//	}
-//
-//	public static void removeCompareEditor(String editorID) {
-//		existingCompareEditors.remove(editorID);
-//	}
-//	
+	// public static void addCompareEditor(String editorID, CompareEditor
+	// editor) {
+	// existingCompareEditors.put(editorID, editor);
+	// }
+	//
+	// public static CompareEditor getCompareEditor(String editorID) {
+	// return existingCompareEditors.get(editorID);
+	// }
+	//
+	// public static void removeCompareEditor(String editorID) {
+	// existingCompareEditors.remove(editorID);
+	// }
+	//
 	public static IDocument getDocumentForEditor(String fileName) {
 		IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IEditorReference[] editorReferences = activeWindow.getActivePage().getEditorReferences();
@@ -286,7 +267,7 @@ public class EditorHelper {
 		return openIEditor(fileName);
 	}
 
-	private static  IDocument openIEditor(String fileName) {
+	private static IDocument openIEditor(String fileName) {
 		IWorkbenchPage page = UIPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
 		IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(file.getName());
@@ -313,6 +294,5 @@ public class EditorHelper {
 		IDocument document = sourceViewer.getDocument();
 		return document;
 	}
-
 
 }
