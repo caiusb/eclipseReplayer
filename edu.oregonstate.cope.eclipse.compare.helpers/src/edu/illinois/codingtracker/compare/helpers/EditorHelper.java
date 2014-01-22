@@ -142,19 +142,6 @@ public class EditorHelper {
 		return fileEditor;
 	}
 
-	public static void activateEditor(IEditorPart editor) {
-		JavaPlugin.getActivePage().activate(editor);
-		if (!(editor instanceof CompareEditor)) {
-			// Move the activated editor to the front of the existing editors
-			// list as the most recent activated editor.
-			boolean isExistingEditor = existingEditors.remove(editor);
-			if (!isExistingEditor) {
-				throw new RuntimeException("Trying to activate an editor that is not part of the existing editors list: " + editor);
-			}
-			existingEditors.add(0, (ITextEditor) editor);
-		}
-	}
-
 	public static void closeAllEditors() {
 		JavaPlugin.getActivePage().closeAllEditors(false);
 		existingEditors.clear();
@@ -233,7 +220,26 @@ public class EditorHelper {
 		}
 	}
 
+	public static void activateEditor(IEditorPart editor) {
+		JavaPlugin.getActivePage().activate(editor);
+//		if (!(editor instanceof CompareEditor)) {
+//			// Move the activated editor to the front of the existing editors
+//			// list as the most recent activated editor.
+//			boolean isExistingEditor = existingEditors.remove(editor);
+//			if (!isExistingEditor) {
+//				throw new RuntimeException("Trying to activate an editor that is not part of the existing editors list: " + editor);
+//			}
+//			existingEditors.add(0, (ITextEditor) editor);
+//		}
+	}
+
 	public static ITextEditor getExistingEditor(String resourcePath) throws PartInitException {
+		 ITextEditor editor = getAlreadyThere(resourcePath);
+		 activateEditor(editor);
+		 return editor;
+	}
+
+	private static ITextEditor getAlreadyThere(String resourcePath) throws PartInitException {
 		IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IEditorReference[] editorReferences = activeWindow.getActivePage().getEditorReferences();
 		for (IEditorReference editorReference : editorReferences) {
