@@ -195,13 +195,14 @@ public class EditorHelper {
 		return existingResourceEditors;
 	}
 
-	public static ITextEditor getExistingEditor(String resourcePath) throws PartInitException {
-		Set<ITextEditor> existingEditors = getExistingEditors(resourcePath);
-		if (!existingEditors.isEmpty()) {
-			return existingEditors.iterator().next();
-		}
-		return null;
-	}
+	// MH REPLACE WITH GO FIND IT FUNCTIONALITY INSTEAD OF KEEPING A LIST
+//	public static ITextEditor getExistingEditor(String resourcePath) throws PartInitException {
+//		Set<ITextEditor> existingEditors = getExistingEditors(resourcePath);
+//		if (!existingEditors.isEmpty()) {
+//			return existingEditors.iterator().next();
+//		}
+//		return null;
+//	}
 
 	public static void closeAllEditorsForResource(String resourcePath) throws PartInitException {
 		for (ITextEditor resourceEditor : getExistingEditors(resourcePath)) {
@@ -213,7 +214,6 @@ public class EditorHelper {
 		if (existingEditors.contains(textEditor)) {
 			throw new RuntimeException("The new editor is already in the existing editors list: " + textEditor);
 		}
-
 		// Add the new editor to the front of the existing editors list as the
 		// most recent new editor.
 		existingEditors.add(0, textEditor);
@@ -233,20 +233,31 @@ public class EditorHelper {
 		}
 	}
 
-	// public static void addCompareEditor(String editorID, CompareEditor
-	// editor) {
-	// existingCompareEditors.put(editorID, editor);
-	// }
-	//
-	// public static CompareEditor getCompareEditor(String editorID) {
-	// return existingCompareEditors.get(editorID);
-	// }
-	//
-	// public static void removeCompareEditor(String editorID) {
-	// existingCompareEditors.remove(editorID);
-	// }
-	//
-	public static IDocument getDocumentForEditor(String fileName) {
+	public static ITextEditor getExistingEditor(String resourcePath) throws PartInitException {
+		IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		IEditorReference[] editorReferences = activeWindow.getActivePage().getEditorReferences();
+		for (IEditorReference editorReference : editorReferences) {
+			IEditorReference e = editorReference;
+			String fileLocation = ((FileEditorInput)editorReference.getEditorInput()).getFile().getFullPath().toString();
+					//ITextFileBufferManager bufferManager = FileBuffers.getTextFileBufferManager();
+			//IDocument document = getDocumentForEditor(editorReference);
+			//if (document == null)
+			//	continue;
+
+			//ITextFileBuffer textFileBuffer = bufferManager.getTextFileBuffer(document);
+			//String fileLocation = textFileBuffer.getLocation().toPortableString();
+			//String fileLocation = editorReference.
+			if (fileLocation.equals(resourcePath)) {
+				//BringToFront
+				return  (ITextEditor) editorReference.getEditor(true);
+			}
+		}
+		// open editor
+		//return openIEditor(fileName);
+		return null;
+	}
+	
+ 	public static IDocument getDocumentForEditor(String fileName) {
 		IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IEditorReference[] editorReferences = activeWindow.getActivePage().getEditorReferences();
 		for (IEditorReference editorReference : editorReferences) {
