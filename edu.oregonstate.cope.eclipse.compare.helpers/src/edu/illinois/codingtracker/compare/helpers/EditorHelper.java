@@ -234,18 +234,25 @@ public class EditorHelper {
 	}
 
 	public static ITextEditor getExistingEditor(String resourcePath) throws PartInitException {
-		 ITextEditor editor = getAlreadyThere(resourcePath);
+		 ITextEditor editor = getExistingEditorForResource(resourcePath);
+		 if (editor == null)
+			 editor = getNewEditorForResource(resourcePath);
+		 
 		 activateEditor(editor);
 		 return editor;
 	}
 
-	private static ITextEditor getAlreadyThere(String resourcePath) throws PartInitException {
+	private static ITextEditor getNewEditorForResource(String resourcePath) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private static ITextEditor getExistingEditorForResource(String resourcePath) throws PartInitException {
 		IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IEditorReference[] editorReferences = activeWindow.getActivePage().getEditorReferences();
 		for (IEditorReference editorReference : editorReferences) {
-			IEditorReference e = editorReference;
 			String fileLocation = ((FileEditorInput)editorReference.getEditorInput()).getFile().getFullPath().toString();
-					//ITextFileBufferManager bufferManager = FileBuffers.getTextFileBufferManager();
+			//ITextFileBufferManager bufferManager = FileBuffers.getTextFileBufferManager();
 			//IDocument document = getDocumentForEditor(editorReference);
 			//if (document == null)
 			//	continue;
