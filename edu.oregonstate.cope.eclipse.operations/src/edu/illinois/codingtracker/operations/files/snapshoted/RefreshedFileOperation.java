@@ -98,9 +98,6 @@ public class RefreshedFileOperation extends SnapshotedFileOperation {
 			createCompilationUnit(replacedText);
 			EditorHelper.createEditor(resourcePath);
 			//If there is a current editor, restore it.
-			if (currentEditor != null) {
-				EditorHelper.activateEditor(currentEditor);
-			}
 		}
 		refresh();
 	}

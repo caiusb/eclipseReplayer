@@ -72,7 +72,6 @@ public class EditedUnsychronizedFileOperation extends FileOperation {
 			fileEditor= EditorHelper.openEditor(resourcePath);
 			EditorHelper.getEditedDocument(fileEditor).set(editorContent);
 		}
-		currentEditor= fileEditor;
 	}
 
 	@Override
