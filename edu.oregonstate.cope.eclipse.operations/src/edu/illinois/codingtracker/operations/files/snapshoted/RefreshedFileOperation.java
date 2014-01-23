@@ -82,7 +82,7 @@ public class RefreshedFileOperation extends SnapshotedFileOperation {
 	private void performReplaying() throws CoreException {
 		ITextEditor fileEditor= EditorHelper.getExistingEditor(resourcePath);
 		if (fileEditor != null) { //File editor exists
-			IDocument editedDocument= EditorHelper.getEditedDocument(fileEditor);
+			IDocument editedDocument= EditorHelper.getDocumentForEditor(resourcePath);
 			if (isCausedByConflictEditorSave && !fileEditor.isDirty()) {
 				//Check the presence of the new text 
 				if (!fileContent.equals(editedDocument.get())) {

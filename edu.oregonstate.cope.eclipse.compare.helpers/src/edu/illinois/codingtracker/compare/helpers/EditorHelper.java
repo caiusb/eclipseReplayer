@@ -53,42 +53,6 @@ import edu.illinois.codingtracker.helpers.ResourceHelper;
 @SuppressWarnings("restriction")
 public class EditorHelper {
 
-	public static IFile getEditedJavaFile(CompareEditor compareEditor) {
-		IFile javaFile = null;
-		IEditorInput editorInput = compareEditor.getEditorInput();
-		if (editorInput instanceof CompareEditorInput) {
-			CompareEditorInput compareEditorInput = (CompareEditorInput) editorInput;
-			Object compareResult = compareEditorInput.getCompareResult();
-			if (compareResult instanceof ICompareInput) {
-				ICompareInput compareInput = (ICompareInput) compareResult;
-				ITypedElement leftTypedElement = compareInput.getLeft();
-				if (leftTypedElement instanceof ResourceNode) {
-					ResourceNode resourceNode = (ResourceNode) leftTypedElement;
-					IResource resource = resourceNode.getResource();
-					if (resource instanceof IFile) {
-						IFile file = (IFile) resource;
-						if (ResourceHelper.isJavaFile(file)) {
-							javaFile = file;
-						}
-					}
-				}
-			}
-		}
-		return javaFile;
-	}
-
-	public static IFile getEditedJavaFile(AbstractDecoratedTextEditor editor) {
-		IFile javaFile = null;
-		IEditorInput editorInput = editor.getEditorInput();
-		if (editorInput instanceof FileEditorInput) {
-			IFile file = ((FileEditorInput) editorInput).getFile();
-			if (ResourceHelper.isJavaFile(file)) {
-				javaFile = file;
-			}
-		}
-		return javaFile;
-	}
-
 	/*
 	 * MH: commented to remove hacked dependency and make the code compile
 	 */
@@ -117,16 +81,6 @@ public class EditorHelper {
 
 	public static IDocument getEditedDocument(ITextEditor editor) {
 		return editor.getDocumentProvider().getDocument(editor.getEditorInput());
-	}
-
-	public static ITextEditor openEditor(String filePath) throws CoreException {
-		ITextEditor fileEditor = getExistingEditor(filePath);
-		if (fileEditor != null) {
-			activateEditor(fileEditor);
-		} else {
-			fileEditor = createEditor(filePath);
-		}
-		return fileEditor;
 	}
 
 	public static void closeAllEditors() {
