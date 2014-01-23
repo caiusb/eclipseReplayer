@@ -40,7 +40,7 @@ public class EditedFileOperation extends FileOperation {
 
 	@Override
 	public void replay() throws CoreException {
-		EditorHelper.getExistingEditor(resourcePath);
+		EditorHelper.getAndOpenEditor(resourcePath);
 	}
 
 }

@@ -37,7 +37,7 @@ public class ClosedFileOperation extends FileOperation {
 
 	@Override
 	public void replay() throws CoreException {
-		ITextEditor fileEditor= EditorHelper.getExistingEditor(resourcePath);
+		ITextEditor fileEditor= EditorHelper.getAndOpenEditor(resourcePath);
 		if (fileEditor != null) {
 			EditorHelper.closeEditorSynchronously(fileEditor);
 		}

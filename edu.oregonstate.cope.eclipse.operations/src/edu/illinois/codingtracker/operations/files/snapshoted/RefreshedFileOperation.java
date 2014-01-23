@@ -80,7 +80,7 @@ public class RefreshedFileOperation extends SnapshotedFileOperation {
 	}
 
 	private void performReplaying() throws CoreException {
-		ITextEditor fileEditor= EditorHelper.getExistingEditor(resourcePath);
+		ITextEditor fileEditor= EditorHelper.getAndOpenEditor(resourcePath);
 		if (fileEditor != null) { //File editor exists
 			IDocument editedDocument= EditorHelper.getDocumentForEditor(resourcePath);
 			if (isCausedByConflictEditorSave && !fileEditor.isDirty()) {
