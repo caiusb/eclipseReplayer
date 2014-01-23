@@ -118,8 +118,8 @@ public abstract class ResourceOperation extends UserOperation {
 		}
 	}
 
-	protected ITextEditor saveResourceInEditor() throws PartInitException {
-		ITextEditor editor= EditorHelper.getExistingEditor(resourcePath);
+	protected ITextEditor saveResourceInEditor() throws PartInitException, JavaModelException {
+		ITextEditor editor= EditorHelper.getAndOpenEditor(resourcePath);
 		if (editor != null) {
 			editor.doSave(null);
 			//FIXME: Instead of sleeping, should listen to IProgressMonitor.done()

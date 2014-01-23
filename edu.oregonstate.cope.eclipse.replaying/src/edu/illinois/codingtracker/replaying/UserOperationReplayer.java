@@ -91,7 +91,7 @@ public class UserOperationReplayer {
 
 	private volatile boolean isPaused= false;
 
-	private IEditorPart currentEditor= null;
+//	private IEditorPart currentEditor= null;
 
 
 	public UserOperationReplayer(OperationSequenceView operationSequenceView) {
@@ -272,7 +272,7 @@ public class UserOperationReplayer {
 
 	private void initializeReplay() {
 		UserOperation.isReplayedRefactoring= false;
-		currentEditor= null;
+//		currentEditor= null;
 		userOperationsIterator= userOperations.iterator();
 		lastSnapshotTimestamp= -1;
 		isCurrentOperationSplit= false;
@@ -473,14 +473,14 @@ public class UserOperationReplayer {
 
 	private void replayAndAdvanceCurrentUserOperation(ReplayPace replayPace, boolean isSplitReplay) {
 		try {
-			if (!Configuration.isInTestMode && currentEditor != null && currentEditor != EditorHelper.getActiveEditor()) {
+			//if (!Configuration.isInTestMode && currentEditor != null && currentEditor != EditorHelper.getActiveEditor()) {
 				if (userOperationExecutionThread != null && userOperationExecutionThread.isAlive()) {
 					forcedExecutionStop= true;
 					userOperationExecutionThread.interrupt();
 				}
-				showMessage("The current editor is wrong. Should be: \"" + currentEditor.getTitle() + "\"");
-				return;
-			}
+				//showMessage("The current editor is wrong. Should be: \"" + currentEditor.getTitle() + "\"");
+				//return;
+			//}
 			if (isSplitReplay && currentUserOperation instanceof TextChangeOperation && !isCurrentOperationSplit) {
 				isCurrentOperationSplit= true;
 				((TextChangeOperation)currentUserOperation).splitReplay();
@@ -488,7 +488,7 @@ public class UserOperationReplayer {
 				isCurrentOperationSplit= false;
 				currentUserOperation.replay();
 			}
-			currentEditor= EditorHelper.getActiveEditor();
+			//currentEditor= EditorHelper.getActiveEditor();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
