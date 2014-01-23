@@ -53,34 +53,8 @@ import edu.illinois.codingtracker.helpers.ResourceHelper;
 @SuppressWarnings("restriction")
 public class EditorHelper {
 
-	/*
-	 * MH: commented to remove hacked dependency and make the code compile
-	 */
-	// public static ISourceViewer getEditingSourceViewer(CompareEditor
-	// compareEditor) {
-	// ISourceViewer sourceViewer= null;
-	// IEditorInput editorInput= compareEditor.getEditorInput();
-	// if (editorInput instanceof CompareEditorInput) {
-	// CompareEditorInput compareEditorInput= (CompareEditorInput)editorInput;
-	// Viewer contentViewer= compareEditorInput.getContentViewer();
-	// if (contentViewer instanceof TextMergeViewer) {
-	// sourceViewer= ((TextMergeViewer)contentViewer).getLeftViewer();
-	// }
-	// }
-	// return sourceViewer;
-	// }
-	//
-	// public static ISourceViewer
-	// getEditingSourceViewer(AbstractDecoratedTextEditor editor) {
-	// return editor.getHackedViewer();
-	// }
-
 	public static IEditorPart getActiveEditor() {
 		return JavaPlugin.getActivePage().getActiveEditor();
-	}
-
-	public static IDocument getEditedDocument(ITextEditor editor) {
-		return editor.getDocumentProvider().getDocument(editor.getEditorInput());
 	}
 
 	public static void closeAllEditors() {
@@ -111,15 +85,6 @@ public class EditorHelper {
 		return existingResourceEditors;
 	}
 
-	// MH REPLACE WITH GO FIND IT FUNCTIONALITY INSTEAD OF KEEPING A LIST
-//	public static ITextEditor getExistingEditor(String resourcePath) throws PartInitException {
-//		Set<ITextEditor> existingEditors = getExistingEditors(resourcePath);
-//		if (!existingEditors.isEmpty()) {
-//			return existingEditors.iterator().next();
-//		}
-//		return null;
-//	}
-
 	public static void closeAllEditorsForResource(String resourcePath) throws PartInitException {
 		for (ITextEditor resourceEditor : getExistingEditors(resourcePath)) {
 			closeEditorSynchronously(resourceEditor);
@@ -136,21 +101,12 @@ public class EditorHelper {
 	public static ITextEditor createEditor(String filePath) throws JavaModelException, PartInitException {
 		IFile file = (IFile) ResourceHelper.findWorkspaceMember(filePath);
 		ITextEditor newTextEditor = (ITextEditor) JavaUI.openInEditor(JavaCore.createCompilationUnitFrom(file), false, false);
-//		addNewEditorToExistingEditors(newTextEditor);
+
 		return newTextEditor;
 	}
 
 	public static void activateEditor(IEditorPart editor) {
 		JavaPlugin.getActivePage().activate(editor);
-//		if (!(editor instanceof CompareEditor)) {
-//			// Move the activated editor to the front of the existing editors
-//			// list as the most recent activated editor.
-//			boolean isExistingEditor = existingEditors.remove(editor);
-//			if (!isExistingEditor) {
-//				throw new RuntimeException("Trying to activate an editor that is not part of the existing editors list: " + editor);
-//			}
-//			existingEditors.add(0, (ITextEditor) editor);
-//		}
 	}
 
 	public static ITextEditor getExistingEditor(String resourcePath) throws PartInitException, JavaModelException {
@@ -165,23 +121,15 @@ public class EditorHelper {
 	private static ITextEditor getExistingEditorForResource(String resourcePath) throws PartInitException {
 		IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IEditorReference[] editorReferences = activeWindow.getActivePage().getEditorReferences();
+		
 		for (IEditorReference editorReference : editorReferences) {
 			String fileLocation = ((FileEditorInput)editorReference.getEditorInput()).getFile().getFullPath().toString();
-			//ITextFileBufferManager bufferManager = FileBuffers.getTextFileBufferManager();
-			//IDocument document = getDocumentForEditor(editorReference);
-			//if (document == null)
-			//	continue;
-
-			//ITextFileBuffer textFileBuffer = bufferManager.getTextFileBuffer(document);
-			//String fileLocation = textFileBuffer.getLocation().toPortableString();
-			//String fileLocation = editorReference.
+			
 			if (fileLocation.equals(resourcePath)) {
-				//BringToFront
 				return  (ITextEditor) editorReference.getEditor(true);
 			}
 		}
-		// open editor
-		//return openIEditor(fileName);
+
 		return null;
 	}
 	
@@ -189,16 +137,8 @@ public class EditorHelper {
 		return getDocumentForEditor(getExistingEditor(resourcePath));
 	}
 	
-	private static IDocument getDocumentForEditor(IEditorPart editorPart) {
-		if (editorPart instanceof MultiPageEditorPart) {
-			// ((MultiPageEditorPart) editorPart).addPageChangedListener(new
-			// MultiEditorPageChangedListener());
-			return null;
-		}
-		
-		ISourceViewer sourceViewer = getViewerForEditor(editorPart);
-		IDocument document = sourceViewer.getDocument();
-		return document;
+	public static IDocument getDocumentForEditor(ITextEditor editor) {
+		return editor.getDocumentProvider().getDocument(editor.getEditorInput());
 	}
 
 	private static ISourceViewer getViewerForEditor(IEditorPart editorPart) {
