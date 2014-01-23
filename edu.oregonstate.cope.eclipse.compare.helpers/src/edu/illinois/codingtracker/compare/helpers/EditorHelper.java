@@ -53,15 +53,6 @@ import edu.illinois.codingtracker.helpers.ResourceHelper;
 @SuppressWarnings("restriction")
 public class EditorHelper {
 
-	private static final int MAXIMUM_OPEN_EDITORS_COUNT = 50; // Does not limit
-																// the number of
-																// CompareEditors.
-
-	private static final List<ITextEditor> existingEditors = new LinkedList<ITextEditor>(); // Does
-																							// not
-																							// include
-																							// CompareEditors.
-
 	public static IFile getEditedJavaFile(CompareEditor compareEditor) {
 		IFile javaFile = null;
 		IEditorInput editorInput = compareEditor.getEditorInput();
@@ -128,10 +119,6 @@ public class EditorHelper {
 		return editor.getDocumentProvider().getDocument(editor.getEditorInput());
 	}
 
-	public static boolean isExistingEditor(IEditorPart editorPart) {
-		return existingEditors.contains(editorPart);
-	}
-
 	public static ITextEditor openEditor(String filePath) throws CoreException {
 		ITextEditor fileEditor = getExistingEditor(filePath);
 		if (fileEditor != null) {
@@ -144,8 +131,6 @@ public class EditorHelper {
 
 	public static void closeAllEditors() {
 		JavaPlugin.getActivePage().closeAllEditors(false);
-		existingEditors.clear();
-		// existingCompareEditors.clear();
 	}
 
 	public static void closeEditorSynchronously(IEditorPart editorPart) {
@@ -154,17 +139,21 @@ public class EditorHelper {
 		if (!success) {
 			throw new RuntimeException("Could not close editor: " + editorPart);
 		}
-		existingEditors.remove(editorPart);
 	}
 
-	public static Set<ITextEditor> getExistingEditors(String resourcePath) throws PartInitException {
+	private static Set<ITextEditor> getExistingEditors(String resourcePath) throws PartInitException {
 		Set<ITextEditor> existingResourceEditors = new HashSet<ITextEditor>();
-		for (ITextEditor textEditor : existingEditors) {
-			IEditorInput editorInput = textEditor.getEditorInput();
+		
+		IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		IEditorReference[] editorReferences = activeWindow.getActivePage().getEditorReferences();
+		
+		for (IEditorReference editorReference : editorReferences) {
+			IEditorInput editorInput = editorReference.getEditorInput();
 			if (editorInput instanceof FileEditorInput && (ResourceHelper.getPortableResourcePath(((FileEditorInput) editorInput).getFile()).startsWith(resourcePath))) {
-				existingResourceEditors.add(textEditor);
+				existingResourceEditors.add((ITextEditor) editorReference.getEditor(true));
 			}
 		}
+		
 		return existingResourceEditors;
 	}
 
@@ -180,29 +169,6 @@ public class EditorHelper {
 	public static void closeAllEditorsForResource(String resourcePath) throws PartInitException {
 		for (ITextEditor resourceEditor : getExistingEditors(resourcePath)) {
 			closeEditorSynchronously(resourceEditor);
-		}
-	}
-
-	private static void addNewEditorToExistingEditors(ITextEditor textEditor) {
-		if (existingEditors.contains(textEditor)) {
-			throw new RuntimeException("The new editor is already in the existing editors list: " + textEditor);
-		}
-		// Add the new editor to the front of the existing editors list as the
-		// most recent new editor.
-		existingEditors.add(0, textEditor);
-
-		// Ensure the size of the existing editors list does not exceed the
-		// maximum allowed size.
-		int existingEditorsCount = existingEditors.size();
-		if (existingEditorsCount > MAXIMUM_OPEN_EDITORS_COUNT) {
-			// Close the oldest not dirty editor.
-			for (int i = existingEditorsCount - 1; i >= 0; i--) {
-				ITextEditor existingEditor = existingEditors.get(i);
-				if (!existingEditor.isDirty()) {
-					closeEditorSynchronously(existingEditor);
-					return;
-				}
-			}
 		}
 	}
 
