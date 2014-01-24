@@ -37,6 +37,7 @@ import edu.illinois.codingtracker.helpers.ResourceHelper;
 import edu.illinois.codingtracker.operations.OperationLexer;
 import edu.illinois.codingtracker.operations.OperationTextChunk;
 import edu.illinois.codingtracker.operations.UserOperation;
+import edu.oregonstate.cope.clientRecorder.JSONConstants;
 
 /**
  * 
@@ -56,6 +57,8 @@ public abstract class TextChangeOperation extends UserOperation {
 	
 	protected String fileName;
 
+	protected String changeOrigin;
+
 	//The following fields are computed during replay, do not serialize/deserialize them!
 
 	public static long lastReplayedTimestamp;
@@ -67,7 +70,6 @@ public abstract class TextChangeOperation extends UserOperation {
 	private IFile editedFile= null;
 
 	private boolean isRecordedWhileRefactoring= false;
-
 
 	public TextChangeOperation() {
 		super();
@@ -134,6 +136,7 @@ public abstract class TextChangeOperation extends UserOperation {
 	 	offset= (int) offsetL;  
 	 	long lengthL =  (Long) value.get("len");
 	 	length= (int)lengthL;
+	 	changeOrigin = (String) value.get(JSONConstants.JSON_CHANGE_ORIGIN);
 	 }
 
 	@Override
