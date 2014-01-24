@@ -208,7 +208,10 @@ public abstract class ResourceOperation extends UserOperation {
 	}
 
 	private boolean isIgnored(IResource resource) {
-		return resource instanceof IFile && !ResourceHelper.isJavaFile((IFile)resource);
+		
+		// MC I do not understand why non java files should be ignored (e.g. this prevented the .classpath file being refreshed)
+		//return resource instanceof IFile && !ResourceHelper.isJavaFile((IFile)resource);
+		return false;
 	}
 
 	public static boolean isExternallyModifiedResource(String resourcePath) {
