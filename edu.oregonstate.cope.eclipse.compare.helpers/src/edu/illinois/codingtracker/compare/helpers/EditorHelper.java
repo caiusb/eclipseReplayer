@@ -50,7 +50,7 @@ public class EditorHelper {
 		}
 	}
 
-	private static Set<ITextEditor> getExistingEditors(String resourcePath) throws PartInitException {
+	public static Set<ITextEditor> getExistingEditors(String resourcePath) throws PartInitException {
 		Set<ITextEditor> existingResourceEditors = new HashSet<ITextEditor>();
 
 		IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
