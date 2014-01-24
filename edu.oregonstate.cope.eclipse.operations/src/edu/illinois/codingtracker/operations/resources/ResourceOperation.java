@@ -118,18 +118,22 @@ public abstract class ResourceOperation extends UserOperation {
 		}
 	}
 
-	protected ITextEditor saveResourceInEditor() throws PartInitException, JavaModelException {
-		ITextEditor editor= EditorHelper.getAndOpenEditor(resourcePath);
-		if (editor != null) {
-			editor.doSave(null);
-			//FIXME: Instead of sleeping, should listen to IProgressMonitor.done()
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				//do nothing
+	protected Set<ITextEditor> saveResourceInEditor() throws PartInitException, JavaModelException {
+		Set<ITextEditor> editors= EditorHelper.getExistingEditors(resourcePath);
+		
+		for (ITextEditor editor : editors) {
+			if (editor != null) {
+				editor.doSave(null);
+				//FIXME: Instead of sleeping, should listen to IProgressMonitor.done()
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					//do nothing
+				}
 			}
 		}
-		return editor;
+		
+		return editors;
 	}
 
 	protected IPackageFragment findOrCreateCompilationUnitParent(String path) throws CoreException {
