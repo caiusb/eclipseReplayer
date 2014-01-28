@@ -198,23 +198,19 @@ public abstract class TextChangeOperation extends UserOperation {
 	}
 
 	 private void updateCurrentState() {
-//		 	EditorHelper.activateEditor(currentEditor);
 		 	try {
 				currentDocument= EditorHelper.getDocumentForEditor(fileName);
 				currentViewer = EditorHelper.getViewerForEditor(fileName);
+				editedFile = getIFile();
 			} catch (PartInitException | JavaModelException e) {
 				throw new RuntimeException(e);
 			}
-//			 if (currentEditor instanceof CompareEditor) {
-//			 //HACKEd DEPENDENCY currentViewer= EditorHelper.getEditingSourceViewer((CompareEditor)currentEditor);
-//			 } else if (currentEditor instanceof AbstractDecoratedTextEditor) {
-//			 //HACKED DEPENDENCY currentViewer= EditorHelper.getEditingSourceViewer((AbstractDecoratedTextEditor)currentEditor);
-//			 }
-		 	 
-		 	//currentViewer = currentEditor.
-		 	
 		 }
-		  
+
+	private IFile getIFile() {
+		IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(fileName));
+		return file;
+	}
 
 	/**
 	 * Valid only during replay.
