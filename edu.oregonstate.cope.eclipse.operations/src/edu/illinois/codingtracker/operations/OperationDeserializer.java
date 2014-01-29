@@ -54,13 +54,7 @@ public class OperationDeserializer {
               e.printStackTrace();
 	      }
       }
-      userOperations = preProcessOperations(userOperations);
       return userOperations;
-	}
-	
-	private static List<UserOperation> preProcessOperations(List<UserOperation> userOperations){
-		System.out.println(userOperations);
-		return null;
 	}
 
 
