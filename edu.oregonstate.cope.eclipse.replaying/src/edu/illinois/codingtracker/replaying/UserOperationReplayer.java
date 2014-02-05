@@ -208,7 +208,8 @@ public class UserOperationReplayer {
 				if (selectedFilePath != null) {
 					String operationsRecord= ResourceHelper.readFileContent(new File(selectedFilePath));
 					try {
-						userOperations= OperationDeserializer.getUserOperations(operationsRecord);
+						OperationDeserializer od = new OperationDeserializer(selectedFilePath);
+						userOperations= od.getUserOperations(operationsRecord);
 					} catch (RuntimeException e) {
 						showMessage("Wrong format. Could not load user operations from file: " + selectedFilePath);
 						throw e;
