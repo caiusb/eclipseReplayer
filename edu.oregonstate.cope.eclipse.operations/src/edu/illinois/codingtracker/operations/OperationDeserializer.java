@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import edu.illinois.codingtracker.operations.files.ClosedFileOperation;
+import edu.illinois.codingtracker.operations.files.CompareWithSnapshot;
 import edu.illinois.codingtracker.operations.files.EditedFileOperation;
 import edu.illinois.codingtracker.operations.files.SaveProjectSnapshot;
 import edu.illinois.codingtracker.operations.files.SavedFileOperation;
@@ -31,10 +32,23 @@ import edu.illinois.codingtracker.operations.textchanges.PerformedTextChangeOper
  */
 public class OperationDeserializer {
 
+	private String eventFilePath = "";
+	
+	public String getEventFilePath() {
+		return eventFilePath;
+	}
 
+	public void setEventFilePath(String eventFilePath) {
+		this.eventFilePath = eventFilePath;
+	}
+	
+	public OperationDeserializer(String eventFilePath) {
+		this.eventFilePath = eventFilePath;
+	}
+	
 	private static final String OPERATIONS_SEPARATOR = "\n\\$@\\$";
 	 
-	public static List<UserOperation> getUserOperations(String operationsRecord) {
+	public List<UserOperation> getUserOperations(String operationsRecord) {
 	  List<UserOperation> userOperations= new LinkedList<UserOperation>();
 	  String[] operationsList = operationsRecord.split(OPERATIONS_SEPARATOR);
 	  JSONParser parser = new JSONParser();
@@ -57,12 +71,11 @@ public class OperationDeserializer {
       return userOperations;
 	}
 
-
-
-	private static void addUserOperation(List<UserOperation> userOperations, JSONObject value, String eventName) {
+	private void addUserOperation(List<UserOperation> userOperations, JSONObject value, String eventName) {
 		UserOperation userOperation= createEmptyUserOperation(eventName);
 		if(userOperation != null){ 
 			userOperation.parse(value);
+			userOperation.setEventFilePath(this.getEventFilePath());
 			userOperations.add(userOperation);
 		}
 		//return userOperation;
@@ -78,6 +91,7 @@ public class OperationDeserializer {
 			userOperation= new EditedFileOperation();
 		}else if(operationSymbol.equals("snapshot")){
 			userOperation= new SaveProjectSnapshot();
+			userOperation= new CompareWithSnapshot();
 		}else if(operationSymbol.equals("fileClose")){
 			userOperation= new ClosedFileOperation();
 		}else if(operationSymbol.equals("testRun")){
