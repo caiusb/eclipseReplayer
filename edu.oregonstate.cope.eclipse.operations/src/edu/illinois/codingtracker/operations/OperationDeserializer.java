@@ -63,31 +63,55 @@ public class OperationDeserializer {
 	        	  continue;
 	          }
 	          value = (JSONObject) parser.parse(operation);
-	          String eventName = (String) value.get("eventType");
-	          System.out.println(eventName);
-	          addUserOperation(userOperations, value, eventName);
+	          JSONObjs.add(value);
 	      } catch (Exception e) {
               // TODO Auto-generated catch block
               e.printStackTrace();
 	      }
       }
+     
+      preprocessJSONArray(JSONObjs);
       
-      
-//      for(String operation : operationsList) {
-//	      try {
-//	          if(operation.isEmpty()) {
-//	        	  continue;
-//	          }
-//	          value = (JSONObject) parser.parse(operation);
-//	          String eventName = (String) value.get("eventType");
-//	          System.out.println(eventName);
-//	          addUserOperation(userOperations, value, eventName);
-//	      } catch (Exception e) {
-//              // TODO Auto-generated catch block
-//              e.printStackTrace();
-//	      }
-//      }
+      for(JSONObject jsonObj : JSONObjs){
+    	  String eventName = (String) jsonObj.get("eventType");
+          System.out.println(eventName);
+          addUserOperation(userOperations, jsonObj, eventName);
+      }
       return userOperations;
+	}
+
+	private void preprocessJSONArray(ArrayList<JSONObject> jsonObjs) {
+		for(int j = 0; j < jsonObjs.size(); j++) {
+			JSONObject jsonObj = jsonObjs.get(j);
+			//CHECK IF CLASSPATH IS BEFORE PROJECT
+			if(jsonObj.get("eventType").toString().equals("resourceAdded")){
+				if(jsonObj.get("entityAddress").toString().contains(".classpath")){
+					//check if next entry is .project
+					int currLoc = jsonObjs.indexOf(jsonObj);
+					JSONObject nextObj = jsonObjs.get(currLoc+1);
+					if(nextObj.get("eventType").toString().equals("resourceAdded") && 
+							nextObj.get("entityAddress").toString().contains(".project")){
+						jsonObjs.set(currLoc, nextObj);
+ 						jsonObjs.set(currLoc+1, jsonObj);
+					}
+				}
+			}
+			
+			//CHECK FOR FILE EVENTS BEFORE RESOURCECREATED
+			if(jsonObj.get("eventType").toString().equals("resourceAdded")){
+				String currResource = jsonObj.get("entityAddress").toString();
+				int currLoc = jsonObjs.indexOf(jsonObj);
+				
+				for(int i = currLoc-1; i >= 0; i--){
+					if(jsonObjs.get(i).containsKey("entityAddress")){
+						if(jsonObjs.get(i).get("entityAddress").equals(currResource)){
+							jsonObjs.remove(i);
+						}
+					}
+				}
+			}
+		}
+		
 	}
 
 	private void addUserOperation(List<UserOperation> userOperations, JSONObject value, String eventName) {
@@ -97,7 +121,6 @@ public class OperationDeserializer {
 			userOperation.setEventFilePath(this.getEventFilePath());
 			userOperations.add(userOperation);
 		}
-		//return userOperation;
 	}
 	
 	
