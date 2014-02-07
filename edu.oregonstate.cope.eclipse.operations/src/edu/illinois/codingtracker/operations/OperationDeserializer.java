@@ -3,6 +3,7 @@
  */
 package edu.illinois.codingtracker.operations;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,10 +37,12 @@ public class OperationDeserializer {
 	 
 	public static List<UserOperation> getUserOperations(String operationsRecord) {
 	  List<UserOperation> userOperations= new LinkedList<UserOperation>();
+	  ArrayList<JSONObject> JSONObjs = new ArrayList<JSONObject>();
 	  String[] operationsList = operationsRecord.split(OPERATIONS_SEPARATOR);
 	  JSONParser parser = new JSONParser();
       JSONObject value = null;
       String strValue = null;
+      
       for(String operation : operationsList) {
 	      try {
 	          if(operation.isEmpty()) {
@@ -54,6 +57,22 @@ public class OperationDeserializer {
               e.printStackTrace();
 	      }
       }
+      
+      
+//      for(String operation : operationsList) {
+//	      try {
+//	          if(operation.isEmpty()) {
+//	        	  continue;
+//	          }
+//	          value = (JSONObject) parser.parse(operation);
+//	          String eventName = (String) value.get("eventType");
+//	          System.out.println(eventName);
+//	          addUserOperation(userOperations, value, eventName);
+//	      } catch (Exception e) {
+//              // TODO Auto-generated catch block
+//              e.printStackTrace();
+//	      }
+//      }
       return userOperations;
 	}
 
