@@ -11,6 +11,7 @@ import edu.illinois.codingtracker.helpers.ResourceHelper;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
@@ -130,23 +131,20 @@ public class CompareWithSnapshot extends FileOperation {
 			    IOUtils.closeQuietly(in);
 			    IOUtils.closeQuietly(out);
 			}
-			IWorkspace workspace = ResourcesPlugin.getWorkspace();
-			IWorkbench iworkbench = PlatformUI.getWorkbench();
-			IWorkbenchWindow iworkbenchwindow = iworkbench.getActiveWorkbenchWindow();
-			IWorkbenchPage iworkbenchpage = iworkbenchwindow.getActivePage();
-			IEditorPart ieditorpart = iworkbenchpage.getActiveEditor();
-			if(ieditorpart != null) {
-				IEditorInput input = ieditorpart.getEditorInput();
-				File projectDir = ((IFileEditorInput)input).getFile().getProject().getLocation().toFile();
-				extractedDir += File.separator + projectDir.getName();  
-				
-				// comparing two times due to limitations of comparator implementation 
-				System.out.println("Comparing " + projectDir.getAbsolutePath() + " and " + extractedDir);
-				new Comparator(projectDir.getAbsolutePath(), extractedDir);
-				System.out.println("Comparing " + extractedDir + " and " + projectDir.getAbsolutePath());
-				new Comparator(extractedDir, projectDir.getAbsolutePath());
-				deleteFolder(new File(extractedDir).getParentFile());
-			}
+			String projectName = snapshotZipFileName.split("-")[0];
+			IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
+			
+			File projectDir = project.getLocation().toFile();
+			
+			extractedDir += File.separator + projectDir.getName();  
+			
+			// comparing two times due to limitations of comparator implementation 
+			System.out.println("Comparing " + projectDir.getAbsolutePath() + " and " + extractedDir);
+			new Comparator(projectDir.getAbsolutePath(), extractedDir);
+			System.out.println("Comparing " + extractedDir + " and " + projectDir.getAbsolutePath());
+			new Comparator(extractedDir, projectDir.getAbsolutePath());
+			deleteFolder(new File(extractedDir).getParentFile());
+
 		} catch (FileNotFoundException e) {
 			System.out.println("Cannot find snapshot file: " + e.getMessage());
 		}
