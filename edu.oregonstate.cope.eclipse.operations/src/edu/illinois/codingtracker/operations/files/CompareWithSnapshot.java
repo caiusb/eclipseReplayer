@@ -135,16 +135,18 @@ public class CompareWithSnapshot extends FileOperation {
 			IWorkbenchWindow iworkbenchwindow = iworkbench.getActiveWorkbenchWindow();
 			IWorkbenchPage iworkbenchpage = iworkbenchwindow.getActivePage();
 			IEditorPart ieditorpart = iworkbenchpage.getActiveEditor();
-			IEditorInput input = ieditorpart.getEditorInput();
-			File projectDir = ((IFileEditorInput)input).getFile().getProject().getLocation().toFile();
-			extractedDir += File.separator + projectDir.getName();  
-			
-			// comparing two times due to limitations of comparator implementation 
-			System.out.println("Comparing " + projectDir.getAbsolutePath() + " and " + extractedDir);
-			new Comparator(projectDir.getAbsolutePath(), extractedDir);
-			System.out.println("Comparing " + extractedDir + " and " + projectDir.getAbsolutePath());
-			new Comparator(extractedDir, projectDir.getAbsolutePath());
-			deleteFolder(new File(extractedDir).getParentFile());
+			if(ieditorpart != null) {
+				IEditorInput input = ieditorpart.getEditorInput();
+				File projectDir = ((IFileEditorInput)input).getFile().getProject().getLocation().toFile();
+				extractedDir += File.separator + projectDir.getName();  
+				
+				// comparing two times due to limitations of comparator implementation 
+				System.out.println("Comparing " + projectDir.getAbsolutePath() + " and " + extractedDir);
+				new Comparator(projectDir.getAbsolutePath(), extractedDir);
+				System.out.println("Comparing " + extractedDir + " and " + projectDir.getAbsolutePath());
+				new Comparator(extractedDir, projectDir.getAbsolutePath());
+				deleteFolder(new File(extractedDir).getParentFile());
+			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Cannot find snapshot file: " + e.getMessage());
 		}
