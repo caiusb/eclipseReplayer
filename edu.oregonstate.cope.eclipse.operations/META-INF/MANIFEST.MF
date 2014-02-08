@@ -4,7 +4,8 @@ Bundle-Name: edu.illinois.codingtracker.operations
 Bundle-SymbolicName: edu.oregonstate.cope.eclipse.operations
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: edu.illinois.codingtracker.operations,
+Export-Package: 
+ edu.illinois.codingtracker.operations,
  edu.illinois.codingtracker.operations.ast,
  edu.illinois.codingtracker.operations.files,
  edu.illinois.codingtracker.operations.files.snapshoted,
@@ -26,3 +27,5 @@ Require-Bundle: edu.oregonstate.cope.eclipse.compare.helpers;visibility:=reexpor
 Bundle-Vendor: University of Illinois
 Import-Package: org.json.simple,
  org.json.simple.parser
+Bundle-ClassPath: thirdParty/diffutils-1.2.1.jar,
+ .
