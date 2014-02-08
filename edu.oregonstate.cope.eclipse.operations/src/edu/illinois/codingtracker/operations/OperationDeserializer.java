@@ -80,7 +80,8 @@ public class OperationDeserializer {
       return userOperations;
 	}
 
-	private void preprocessJSONArray(ArrayList<JSONObject> jsonObjs) {
+	
+	private void swapClasspathWithProject(ArrayList<JSONObject> jsonObjs){
 		for(int j = 0; j < jsonObjs.size(); j++) {
 			JSONObject jsonObj = jsonObjs.get(j);
 			//CHECK IF CLASSPATH IS BEFORE PROJECT
@@ -96,7 +97,12 @@ public class OperationDeserializer {
 					}
 				}
 			}
-			
+		}
+	}
+	
+	private void removeSpuriousEventsBeforeRecourceCreated(ArrayList<JSONObject> jsonObjs){
+		for(int j = 0; j < jsonObjs.size(); j++) {
+			JSONObject jsonObj = jsonObjs.get(j);
 			//CHECK FOR FILE EVENTS BEFORE RESOURCECREATED
 			if(jsonObj.get("eventType").toString().equals("resourceAdded")){
 				String currResource = jsonObj.get("entityAddress").toString();
@@ -106,12 +112,17 @@ public class OperationDeserializer {
 					if(jsonObjs.get(i).containsKey("entityAddress")){
 						if(jsonObjs.get(i).get("entityAddress").equals(currResource)){
 							jsonObjs.remove(i);
+							j--;
 						}
 					}
 				}
 			}
 		}
-		
+	}
+	
+	private void preprocessJSONArray(ArrayList<JSONObject> jsonObjs) {
+		swapClasspathWithProject(jsonObjs);
+		removeSpuriousEventsBeforeRecourceCreated(jsonObjs);
 	}
 
 	private void addUserOperation(List<UserOperation> userOperations, JSONObject value, String eventName) {
