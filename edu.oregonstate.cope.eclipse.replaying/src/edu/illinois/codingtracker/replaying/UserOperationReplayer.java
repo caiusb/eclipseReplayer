@@ -475,12 +475,12 @@ public class UserOperationReplayer {
 	private void replayAndAdvanceCurrentUserOperation(ReplayPace replayPace, boolean isSplitReplay) {
 		try {
 			//if (!Configuration.isInTestMode && currentEditor != null && currentEditor != EditorHelper.getActiveEditor()) {
-				if (userOperationExecutionThread != null && userOperationExecutionThread.isAlive()) {
-					forcedExecutionStop= true;
-					userOperationExecutionThread.interrupt();
-				}
-				//showMessage("The current editor is wrong. Should be: \"" + currentEditor.getTitle() + "\"");
-				//return;
+			//	if (userOperationExecutionThread != null && userOperationExecutionThread.isAlive()) {
+			//		forcedExecutionStop= true;
+			//		userOperationExecutionThread.interrupt();
+			//	}
+			//	showMessage("The current editor is wrong. Should be: \"" + currentEditor.getTitle() + "\"");
+			//	return;
 			//}
 			if (isSplitReplay && currentUserOperation instanceof TextChangeOperation && !isCurrentOperationSplit) {
 				isCurrentOperationSplit= true;
