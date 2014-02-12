@@ -321,6 +321,7 @@ public abstract class TextChangeOperation extends UserOperation {
 		sb.append("New text: " + newText + "\n");
 		sb.append("Offset: " + offset + "\n");
 		sb.append("Length: " + length + "\n");
+		sb.append("Origin: " + changeOrigin + "\n");
 		sb.append(super.toString());
 		return sb.toString();
 	}
