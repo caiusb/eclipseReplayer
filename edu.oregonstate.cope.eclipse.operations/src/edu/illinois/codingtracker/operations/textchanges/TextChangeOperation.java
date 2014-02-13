@@ -141,6 +141,10 @@ public abstract class TextChangeOperation extends UserOperation {
 
 	@Override
 	public void replay() throws BadLocationException, ExecutionException {
+		
+		if (changeIsInAuxiliaryConflictFile(fileName))
+			return;
+		
 		lastReplayedTimestamp= getTime();
 		if (isReplayedRefactoring) {
 			isRecordedWhileRefactoring= true;
@@ -150,6 +154,10 @@ public abstract class TextChangeOperation extends UserOperation {
 			replayTextChange();
 			//postReplay();
 		}
+	}
+
+	private boolean changeIsInAuxiliaryConflictFile(String fileName) {
+		return fileName.contains(".java") && !fileName.endsWith(".java");
 	}
 
 	/**
