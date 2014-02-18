@@ -12,6 +12,8 @@ import edu.illinois.codingtracker.helpers.ResourceHelper;
 import edu.illinois.codingtracker.operations.OperationLexer;
 import edu.illinois.codingtracker.operations.OperationSymbols;
 import edu.illinois.codingtracker.operations.OperationTextChunk;
+import edu.oregonstate.cope.clientRecorder.util.COPELogger;
+import edu.oregonstate.cope.eclipse.COPEPlugin;
 
 /**
  * 
@@ -22,7 +24,7 @@ public class CreatedResourceOperation extends UpdatedResourceOperation {
 
 	private boolean isFile= false;
 
-	private String fileContent= "";
+	private byte[] fileContent= new byte[0];
 
 	public CreatedResourceOperation() {
 		super();
@@ -33,7 +35,7 @@ public class CreatedResourceOperation extends UpdatedResourceOperation {
 		if (resource instanceof IFile) {
 			isFile= true;
 			if (success) {
-				fileContent= ResourceHelper.readFileContent((IFile)resource);
+				fileContent= ResourceHelper.readFileContent((IFile)resource).getBytes();
 			}
 		}
 	}
@@ -59,20 +61,20 @@ public class CreatedResourceOperation extends UpdatedResourceOperation {
 	protected void initializeFrom(OperationLexer operationLexer) {
 		super.initializeFrom(operationLexer);
 		isFile= operationLexer.readBoolean();
-		fileContent= operationLexer.readString();
+		fileContent= operationLexer.readString().getBytes();
 	}
 	
 	@Override
 	public void parse(JSONObject value) {
 		super.parse(value);
 		isFile= true;
-		fileContent= (String) value.get("text");
+		fileContent= ((String) value.get("text")).getBytes();
 	}
 
 	@Override
 	public void replayBreakableResourceOperation() throws CoreException {
 		if (isFile) {
-			createCompilationUnit(fileContent);
+			createCompilationUnit(new String(fileContent));
 		} else {
 			createContainer();
 		}
