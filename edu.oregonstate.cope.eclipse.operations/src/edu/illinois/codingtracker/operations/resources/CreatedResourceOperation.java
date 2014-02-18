@@ -68,7 +68,15 @@ public class CreatedResourceOperation extends UpdatedResourceOperation {
 	public void parse(JSONObject value) {
 		super.parse(value);
 		isFile= true;
-		fileContent= ((String) value.get("text")).getBytes();
+		String fileExtension = resourcePath.substring(resourcePath.lastIndexOf("."));
+		if(COPEPlugin.getDefault().knownTextFiles.contains(fileExtension))
+			fileContent= ((String) value.get("text")).getBytes();
+		else
+			fileContent = getBinaryContent((String) value.get("text"));
+	}
+
+	private byte[] getBinaryContent(String string) {
+		return null;
 	}
 
 	@Override
