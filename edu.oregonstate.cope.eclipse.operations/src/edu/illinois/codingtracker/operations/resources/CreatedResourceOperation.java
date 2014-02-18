@@ -3,6 +3,11 @@
  */
 package edu.illinois.codingtracker.operations.resources;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import org.apache.commons.codec.binary.Base64InputStream;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -76,7 +81,21 @@ public class CreatedResourceOperation extends UpdatedResourceOperation {
 	}
 
 	private byte[] getBinaryContent(String string) {
-		return null;
+		Base64InputStream inputStream = new Base64InputStream(new ByteArrayInputStream(string.getBytes()), true, 0, null);
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		try {
+			do {
+				byte[] b = new byte[1024];
+				int read;
+					read = inputStream.read(b);
+				if (read == -1)
+					break;
+				outputStream.write(b,0,read);
+			} while(true);
+			inputStream.close();
+			outputStream.close();
+		} catch (IOException e) {}
+		return outputStream.toByteArray();
 	}
 
 	@Override
