@@ -74,7 +74,7 @@ public class CreatedResourceOperation extends UpdatedResourceOperation {
 		super.parse(value);
 		isFile= true;
 		String fileExtension = resourcePath.substring(resourcePath.lastIndexOf("."));
-		if(COPEPlugin.getDefault().knownTextFiles.contains(fileExtension))
+		if(COPEPlugin.knownTextFiles.contains(fileExtension))
 			fileContent= ((String) value.get("text")).getBytes();
 		else
 			fileContent = getBinaryContent((String) value.get("text"));
