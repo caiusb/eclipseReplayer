@@ -74,8 +74,12 @@ public class EditorHelper {
 
 	public static ITextEditor createEditor(String filePath) throws JavaModelException, PartInitException {
 		IFile file = (IFile) ResourceHelper.findWorkspaceMember(filePath);
-		ITextEditor newTextEditor = (ITextEditor) JavaUI.openInEditor(JavaCore.createCompilationUnitFrom(file), false, false);
-
+		ITextEditor newTextEditor = null;
+		
+		if (filePath.endsWith(".java")) {
+			newTextEditor = (ITextEditor) JavaUI.openInEditor(JavaCore.createCompilationUnitFrom(file), false, false);
+		}
+		
 		return newTextEditor;
 	}
 
